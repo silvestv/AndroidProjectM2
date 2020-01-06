@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/text_dashboard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/avatarChosen"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:contentDescription="Avatar"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <Button
+            android:id="@+id/chooseImg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Choisir nouvelle image" />
+
+        <Button
+            android:id="@+id/chooseEvent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Choisir Evenement" />
+
+
+        <Button
+            android:id="@+id/chooseContact"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Choisir Contact" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/chooseContact"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:id="@+id/tvContactName" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvContactName"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="24dp"
+            android:id="@+id/tvContactNumber" />
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
