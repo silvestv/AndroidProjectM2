@@ -1,5 +1,6 @@
 package com.example.projetandroidsilvestre;
 
+import android.content.ClipData;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;

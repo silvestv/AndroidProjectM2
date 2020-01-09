@@ -43,27 +43,29 @@
             android:text="Choisir Evenement" />
 
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listSelectEventRcl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/chooseEvent" />
+
         <Button
             android:id="@+id/chooseContact"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Choisir Contact" />
 
-        <TextView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listSelectedContactRcl"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/chooseContact"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="5dp"
-            android:id="@+id/tvContactName" />
+            android:layout_height="match_parent"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="50dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/chooseContact" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvContactName"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="24dp"
-            android:id="@+id/tvContactNumber" />
     </LinearLayout>
 
 
