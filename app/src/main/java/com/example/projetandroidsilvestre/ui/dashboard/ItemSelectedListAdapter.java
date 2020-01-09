@@ -20,7 +20,7 @@ public class ItemSelectedListAdapter extends RecyclerView.Adapter<ItemSelectedLi
     private Context mContext;
     private List<RemoveEventListener> removeItemListeners;
     private final LayoutInflater mInflater;
-    private int pos;
+   // private int pos;
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
@@ -55,17 +55,20 @@ public class ItemSelectedListAdapter extends RecyclerView.Adapter<ItemSelectedLi
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(ItemSelectedViewHolder holder, int position) {
+    public void onBindViewHolder(ItemSelectedViewHolder holder, final int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        pos = position;
-        holder.textView.setText(mDataset.get(pos));
+
+        holder.textView.setText(mDataset.get(position));
         holder.deleteItemBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                mDataset.remove(pos);
+
+                System.out.println("DATA  : "+mDataset.get(position));
+                mDataset.remove(position);
+                System.out.println("Postio Remove  : "+position);
                 notifyDataSetChanged();
-                notifyDeleted(pos);
+                notifyDeleted(position);
             }
         });
     }

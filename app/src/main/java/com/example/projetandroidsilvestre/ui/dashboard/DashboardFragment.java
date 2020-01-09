@@ -166,6 +166,7 @@ public class DashboardFragment extends Fragment {
         adapterContact.addRemoveContactListener(new RemoveEventListener() {
             @Override
             public void deleteEvent(int position) {
+                //selectedContactsData.remove(position);
             }
         });
 
