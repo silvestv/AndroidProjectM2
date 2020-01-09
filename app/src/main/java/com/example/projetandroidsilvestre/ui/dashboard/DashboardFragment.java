@@ -2,29 +2,21 @@ package com.example.projetandroidsilvestre.ui.dashboard;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.ContentUris;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.BitmapFactory;
-import android.icu.text.Transliterator;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.Button;
-import android.widget.CalendarView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
@@ -41,6 +33,8 @@ import com.example.projetandroidsilvestre.ChooseEvent;
 import com.example.projetandroidsilvestre.EventListAdapter;
 import com.example.projetandroidsilvestre.MainActivity;
 import com.example.projetandroidsilvestre.R;
+import com.example.projetandroidsilvestre.model.Picture;
+import com.example.projetandroidsilvestre.model.Repository;
 
 import java.util.ArrayList;
 
@@ -49,20 +43,27 @@ import static android.app.Activity.RESULT_OK;
 public class DashboardFragment extends Fragment {
 
     private DashboardViewModel dashboardViewModel;
+
     private Button chooseImgBtn;
-    private Button chooseEventBtn;
+    private Uri selectedImgUri;
+
     private Button chooseContactBtn;
     private RecyclerView recyclerViewContact;
     private ItemSelectedListAdapter adapterContact;
     private RecyclerView.LayoutManager layoutManagerContact;
     private ArrayList<String> selectedContactsData = new ArrayList<String>();
+    private ArrayList<Uri> selectedContactsUri = new ArrayList<>();
 
+    private Button chooseEventBtn;
     private RecyclerView recyclerViewEvent;
     private ItemSelectedListAdapter adapterEvent;
     private RecyclerView.LayoutManager layoutManagerEvent;
     private ArrayList<String> selectedEventsData = new ArrayList<String>();
+    private ArrayList<Uri> selectedEventsUri = new ArrayList<>();
 
+    private Repository rep ;
     private Button deleteItemBtn;
+    private Button saveAnnotDbButton ;
 
     private static int RESULT_LOAD_IMAGE = 1;
     private static int RESULT_LOAD_CONTACT =1001;
@@ -130,6 +131,15 @@ public class DashboardFragment extends Fragment {
                 }
             }
         });
+
+        saveAnnotDbButton = (Button) root.findViewById(R.id.saveAnnotDbBtn);//TODO à modifier
+        saveAnnotDbButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                rep.insert(new Picture(selectedImgUri));
+            }
+        });
+
         final TextView textView = root.findViewById(R.id.text_dashboard);
         dashboardViewModel.getText().observe(this, new Observer<String>() {
             @Override
@@ -172,8 +182,6 @@ public class DashboardFragment extends Fragment {
 
         return root;
 
-
-
     }
 
     @Override
@@ -181,10 +189,10 @@ public class DashboardFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         //Context applicationContext = MainActivity.getContextOfApplication();
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
-            Uri selectedImage = data.getData();
+            selectedImgUri = data.getData();
             String[] filePathColumn = { MediaStore.Images.Media.DATA };
 
-            Cursor cursor = getActivity().getContentResolver().query(selectedImage,
+            Cursor cursor = getActivity().getContentResolver().query(selectedImgUri,
                     filePathColumn, null, null, null);
             cursor.moveToFirst();
 
@@ -200,6 +208,7 @@ public class DashboardFragment extends Fragment {
                 String contactNumber = null;
                 String contactName = null;
                 Uri selectedContact = data.getData();
+                selectedContactsUri.add(selectedContact);
                 //Uri photoUri = Uri.withAppendedPath(selectedContact, ContactsContract.Contacts.Photo.CONTENT_DIRECTORY);
                 Cursor cursor = getActivity().getContentResolver().query(selectedContact, null, null, null, null);
                 cursor.moveToFirst();
@@ -221,6 +230,7 @@ public class DashboardFragment extends Fragment {
 
         } else if (requestCode == RESULT_LOAD_EVENT  && resultCode == Activity.RESULT_OK && null != data) {
             Uri selectedEventUri = data.getData();
+            selectedContactsUri.add(selectedEventUri);
             Cursor cursor = getActivity().getContentResolver().query(selectedEventUri, null, null,null,null);
             cursor.moveToFirst();
             final String se =  cursor.getString(cursor.getColumnIndex(CalendarContract.Events.TITLE));
