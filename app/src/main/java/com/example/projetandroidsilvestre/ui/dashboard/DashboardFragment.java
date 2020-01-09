@@ -132,6 +132,7 @@ public class DashboardFragment extends Fragment {
             }
         });
 
+
         saveAnnotDbButton = (Button) root.findViewById(R.id.saveAnnotDbBtn);//TODO à modifier
         saveAnnotDbButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,10 +142,10 @@ public class DashboardFragment extends Fragment {
         });
 
         final TextView textView = root.findViewById(R.id.text_dashboard);
+
         dashboardViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                textView.setText(s);
             }
         });
 
