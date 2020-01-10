@@ -5,13 +5,40 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/researchTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Make A Research !"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_marginTop="50dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <SearchView
+            android:id="@+id/searchingContactView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content"
+            android:queryHint="Search By Contact">
+
+        </SearchView>
+
+        <SearchView
+            android:id="@+id/searchingEventView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:queryHint="Search By Event" />
+
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
