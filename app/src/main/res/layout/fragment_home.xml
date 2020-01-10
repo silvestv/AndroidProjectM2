@@ -5,6 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/homeTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Welcome Home !"
+        android:textSize="30sp"
+        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
@@ -24,7 +34,8 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/listAnnotRcl"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginTop="50dp">
 
             </androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
@@ -36,7 +47,7 @@
         android:layout_width="56dp"
         android:layout_height="wrap_content"
         android:layout_marginRight="30dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="80dp"
         android:clickable="true"
         app:backgroundTint="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"
