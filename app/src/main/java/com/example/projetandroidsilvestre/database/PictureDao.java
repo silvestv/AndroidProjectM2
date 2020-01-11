@@ -1,5 +1,7 @@
 package com.example.projetandroidsilvestre.database;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
@@ -21,6 +23,9 @@ public interface PictureDao {
     void deleteAll();
 
     @Query("SELECT * from picture_table ORDER BY picture ASC")
-    List<Picture> getAlphabetizedPictures();
+    LiveData<List<Picture>> getAlphabetizedPictures();
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    void insertAll(List<Picture> picture);
 
 }

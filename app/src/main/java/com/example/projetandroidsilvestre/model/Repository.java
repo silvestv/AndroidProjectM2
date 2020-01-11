@@ -2,6 +2,10 @@ package com.example.projetandroidsilvestre.model;
 
 import android.app.Application;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+
+import com.example.projetandroidsilvestre.database.PicAnnotationDao;
 import com.example.projetandroidsilvestre.database.PictureDao;
 import com.example.projetandroidsilvestre.database.SempicDatabase;
 
@@ -10,7 +14,10 @@ import java.util.List;
 public class Repository {
 
     private PictureDao mPictureDao;
-    private List<Picture> mAllPictures;
+    private LiveData<List<Picture>> mAllPictures;
+
+    private PicAnnotationDao mPicAnotDao;
+    //private LiveData<List<PicAnnotation>> mAllPicAnot;
 
     // Note that in order to unit test the WordRepository, you have to remove the Application
     // dependency. This adds complexity and much more code, and this sample is not about testing.
@@ -18,21 +25,33 @@ public class Repository {
     // https://github.com/googlesamples
     public Repository(Application application) {
         SempicDatabase db = SempicDatabase.getDatabase(application);
+
         mPictureDao = db.pictureDao();
         mAllPictures = mPictureDao.getAlphabetizedPictures();
-    }
 
-    public List<Picture> getAllPictures() {
-        return mAllPictures;
+        //mPicAnotDao = db.getPicAnnotationDao();
+        //mAllPicAnot = mPicAnotDao.loadAnnotations();
     }
-
-    // You must call this on a non-UI thread or your app will throw an exception. Room ensures
-    // that you're not doing any long running operations on the main thread, blocking the UI.
 
     public void insert(Picture picture) {
         SempicDatabase.databaseWriteExecutor.execute(() -> {
+            System.out.println("PREEEEEEEEEEESDSSSQUE : "+picture.getPicture());
             mPictureDao.insert(picture);
+
         });
     }
+
+    public LiveData<List<Picture>> getAlphabetizedPictures() {
+        //SempicDatabase.databaseWriteExecutor.execute(() -> {
+            return mAllPictures;
+            //System.out.println("getAlphabetizedPictures object.size() = : "+this.mAllPictures.size());
+        //});
+    }
+/*
+    public LiveData<List<PicAnnotation>> getAllPicAnot(){
+        //SempicDatabase.databaseWriteExecutor.execute(() -> {
+        return mAllPicAnot;
+       //});
+    }*/
 
 }

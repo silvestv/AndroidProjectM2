@@ -4,10 +4,14 @@ import android.net.Uri;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
-@Entity(tableName = "contact_annotation" , primaryKeys = {"picUri", "contactUri"})
+import java.util.List;
+
+@Entity(tableName = "contact_annotation")
 public class ContactAnnotation {
 
+    @PrimaryKey
     @NonNull
     private Uri picUri;
     @NonNull

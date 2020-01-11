@@ -72,8 +72,9 @@ public class DashboardFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        dashboardViewModel =
-                ViewModelProviders.of(this).get(DashboardViewModel.class);
+
+        DashboardViewModelFactory factory = new DashboardViewModelFactory(this.getActivity().getApplication());
+        dashboardViewModel = ViewModelProviders.of(this, factory).get(DashboardViewModel.class);
         root = inflater.inflate(R.layout.fragment_annotations, container, false);
         chooseImgBtn = (Button) root.findViewById(R.id.chooseImg);
         chooseImgBtn.setOnClickListener(new View.OnClickListener() {
@@ -137,17 +138,20 @@ public class DashboardFragment extends Fragment {
         saveAnnotDbButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                rep.insert(new Picture(selectedImgUri));
+                Picture p = new Picture(selectedImgUri);
+                //System.out.println("LAAAAAOOOOOOOOOOOOAAAAAAAIIIIT: "+selectedImgUri);
+                //System.out.println("LAAAAAAAAAAAAAAAAAAAAAAAAAIIIIT: "+p);
+                dashboardViewModel.insertPicture(p);
             }
         });
 
-        final TextView textView = root.findViewById(R.id.text_dashboard);
+        /*final TextView textView = root.findViewById(R.id.text_dashboard);
 
         dashboardViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
             }
-        });
+        });*/
 
         recyclerViewEvent = (RecyclerView) root.findViewById(R.id.listSelectEventRcl);
         recyclerViewEvent.setHasFixedSize(true);

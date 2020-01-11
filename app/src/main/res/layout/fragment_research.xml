@@ -39,6 +39,17 @@
             android:layout_marginTop="10dp"
             android:queryHint="Search By Event" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerviewEvent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/darker_gray"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/recyclerview_event" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

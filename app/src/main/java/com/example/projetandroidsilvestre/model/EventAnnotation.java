@@ -14,10 +14,10 @@ public class EventAnnotation {
     @PrimaryKey
     @NonNull
     private Uri picUri;
-    private List<Uri> eventUri;
+    private Uri eventUri;
 
 
-    public EventAnnotation(Uri picUri, List<Uri> eventUri) {
+    public EventAnnotation(Uri picUri, Uri eventUri) {
         this.picUri=picUri;
         this.eventUri=eventUri;
     }
@@ -26,7 +26,7 @@ public class EventAnnotation {
         return picUri;
     }
 
-    public List<Uri> getEventUri() {
+    public Uri getEventUri() {
         return eventUri;
     }
 
