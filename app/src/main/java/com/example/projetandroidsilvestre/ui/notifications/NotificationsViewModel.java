@@ -2,16 +2,12 @@ package com.example.projetandroidsilvestre.ui.notifications;
 
 import android.app.Application;
 import android.net.Uri;
-import android.util.EventLog;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.projetandroidsilvestre.model.ContactAnnotation;
 import com.example.projetandroidsilvestre.model.EventAnnotation;
-import com.example.projetandroidsilvestre.model.PicAnnotation;
-import com.example.projetandroidsilvestre.model.Picture;
 import com.example.projetandroidsilvestre.model.Repository;
 
 import java.util.Iterator;
@@ -36,16 +32,20 @@ public class NotificationsViewModel extends ViewModel {
     }
 
     List<Uri> getAllEventsFromAGivenPicture(Uri myPictureUri){        //fonctionne
+        System.out.println("Hello");
         if(this.mAllEventAnnotation.getValue()!=null){
             Iterator<EventAnnotation> it = this.mAllEventAnnotation.getValue().iterator();
             EventAnnotation next ;
             List<Uri> result = new LinkedList<Uri>();
+            int i = 0;
             while(it.hasNext()){
                 next = it.next();
                 if(next.getPicUri().toString().equals(myPictureUri.toString())){
                     result.add(next.getEventUri());
                 }
+                i++;
             }
+            System.out.println("nb event registred : "+i);
             return result;
         }
         else{

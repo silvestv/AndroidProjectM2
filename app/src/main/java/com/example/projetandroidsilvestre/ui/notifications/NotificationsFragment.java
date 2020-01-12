@@ -9,10 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.SearchView;
-import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -22,13 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.projetandroidsilvestre.R;
 import com.example.projetandroidsilvestre.model.ContactAnnotation;
 import com.example.projetandroidsilvestre.model.EventAnnotation;
-import com.example.projetandroidsilvestre.model.PicAnnotation;
-import com.example.projetandroidsilvestre.model.Picture;
-import com.example.projetandroidsilvestre.ui.dashboard.DashboardViewModel;
-import com.example.projetandroidsilvestre.ui.dashboard.DashboardViewModelFactory;
 
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 public class NotificationsFragment extends Fragment {
@@ -65,8 +58,9 @@ public class NotificationsFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                List<Uri> l = notificationsViewModel.getAllEventsFromAGivenPicture(Uri.parse(editable.toString())); //exemple de fonctionnement pour récupérer tout les évènements de la photo passée en paramètre
+                List<Uri> l = notificationsViewModel.getAllEventsFromAGivenPicture(Uri.parse("content://com.google.android.apps.photos.contentprovider/-1/1/content%3A%2F%2Fmedia%2Fexternal%2Fimages%2Fmedia%2F38/ORIGINAL/NONE/731695736".toString())); //exemple de fonctionnement pour récupérer tout les évènements de la photo passée en paramètre
                 eventAdapter.setUri(l);
+                System.out.println("size events : "+l.size());
             }
         });
 
