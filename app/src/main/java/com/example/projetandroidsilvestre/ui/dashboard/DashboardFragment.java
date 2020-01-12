@@ -146,6 +146,7 @@ public class DashboardFragment extends Fragment {
                     Iterator<Uri> it = selectedEventsUri.iterator();
                     while(it.hasNext()){
                         EventAnnotation ev = new EventAnnotation(selectedImgUri, it.next());
+                        System.out.println("selected image uri"+selectedImgUri.toString());
                         dashboardViewModel.insertEventAnnotation(ev);
                     }
                 }
