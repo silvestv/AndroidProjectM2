@@ -2,17 +2,12 @@ package com.example.projetandroidsilvestre.ui.notifications;
 
 import android.app.Application;
 import android.net.Uri;
-import android.util.EventLog;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.projetandroidsilvestre.model.Contact;
 import com.example.projetandroidsilvestre.model.ContactAnnotation;
 import com.example.projetandroidsilvestre.model.EventAnnotation;
-import com.example.projetandroidsilvestre.model.PicAnnotation;
-import com.example.projetandroidsilvestre.model.Picture;
 import com.example.projetandroidsilvestre.model.Repository;
 
 import java.util.Iterator;
