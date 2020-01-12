@@ -1,17 +1,13 @@
 package com.example.projetandroidsilvestre.database;
 
-import android.net.Uri;
-
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
-import androidx.room.Transaction;
 
 import com.example.projetandroidsilvestre.model.ContactAnnotation;
 import com.example.projetandroidsilvestre.model.EventAnnotation;
-import com.example.projetandroidsilvestre.model.PicAnnotation;
 
 import java.util.List;
 
@@ -25,19 +21,14 @@ public interface PicAnnotationDao {
     void insertPictureContact(ContactAnnotation a);
 
     @Query("DELETE FROM event_annotation")
-    void deleteAll();
+    void deleteAllEvent();
 
-    /*@Transaction
-    @Query("SELECT * from event_annotation")
-    LiveData<List<PicAnnotation>> loadAnnotations();*/
+    @Query("DELETE FROM contact_annotation")
+    void deleteAllContacts();
 
-    @Query("SELECT eventUri from event_annotation where picUri = :uri")
-    LiveData<List<Uri>> loadEventsFromOneAnot(Uri uri);
+    @Query("Select * from event_annotation")
+    LiveData<List<EventAnnotation>> loadAllEventAnnotation();
 
-    @Query("SELECT contactUri from contact_annotation where picUri = :uri")
-    LiveData<List<Uri>> loadContactsFromOneAnot(Uri uri);
-
-    @Query("SELECT c.picUri, e.picUri from contact_annotation AS c, event_annotation as e")
-    LiveData<List<Uri>> loadAllPictures();
-
+    @Query("Select * from contact_annotation")
+    LiveData<List<ContactAnnotation>> loadAllContactAnnotation();
 }

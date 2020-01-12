@@ -33,10 +33,14 @@ import com.example.projetandroidsilvestre.ChooseEvent;
 import com.example.projetandroidsilvestre.EventListAdapter;
 import com.example.projetandroidsilvestre.MainActivity;
 import com.example.projetandroidsilvestre.R;
+import com.example.projetandroidsilvestre.model.ContactAnnotation;
+import com.example.projetandroidsilvestre.model.EventAnnotation;
 import com.example.projetandroidsilvestre.model.Picture;
 import com.example.projetandroidsilvestre.model.Repository;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -52,14 +56,14 @@ public class DashboardFragment extends Fragment {
     private ItemSelectedListAdapter adapterContact;
     private RecyclerView.LayoutManager layoutManagerContact;
     private ArrayList<String> selectedContactsData = new ArrayList<String>();
-    private ArrayList<Uri> selectedContactsUri = new ArrayList<>();
+    private List<Uri> selectedContactsUri = new ArrayList<>();
 
     private Button chooseEventBtn;
     private RecyclerView recyclerViewEvent;
     private ItemSelectedListAdapter adapterEvent;
     private RecyclerView.LayoutManager layoutManagerEvent;
     private ArrayList<String> selectedEventsData = new ArrayList<String>();
-    private ArrayList<Uri> selectedEventsUri = new ArrayList<>();
+    private List<Uri> selectedEventsUri = new ArrayList<>();
 
     private Repository rep ;
     private Button deleteItemBtn;
@@ -134,24 +138,26 @@ public class DashboardFragment extends Fragment {
         });
 
 
-        saveAnnotDbButton = (Button) root.findViewById(R.id.saveAnnotDbBtn);//TODO à modifier
+        saveAnnotDbButton = (Button) root.findViewById(R.id.saveAnnotDbBtn);
         saveAnnotDbButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Picture p = new Picture(selectedImgUri);
-                //System.out.println("LAAAAAOOOOOOOOOOOOAAAAAAAIIIIT: "+selectedImgUri);
-                //System.out.println("LAAAAAAAAAAAAAAAAAAAAAAAAAIIIIT: "+p);
-                dashboardViewModel.insertPicture(p);
+                if((selectedEventsUri!=null)&&(selectedImgUri!=null)){
+                    Iterator<Uri> it = selectedEventsUri.iterator();
+                    while(it.hasNext()){
+                        EventAnnotation ev = new EventAnnotation(selectedImgUri, it.next());
+                        dashboardViewModel.insertEventAnnotation(ev);
+                    }
+                }
+                if((selectedContactsUri!=null)&&(selectedImgUri!=null)){
+                    Iterator<Uri> it = selectedContactsUri.iterator();
+                    while(it.hasNext()){
+                        ContactAnnotation ca = new ContactAnnotation(selectedImgUri, it.next());
+                        dashboardViewModel.insertContactAnnotation(ca);
+                    }
+                }
             }
         });
-
-        /*final TextView textView = root.findViewById(R.id.text_dashboard);
-
-        dashboardViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-            }
-        });*/
 
         recyclerViewEvent = (RecyclerView) root.findViewById(R.id.listSelectEventRcl);
         recyclerViewEvent.setHasFixedSize(true);
@@ -163,10 +169,6 @@ public class DashboardFragment extends Fragment {
         adapterEvent.addRemoveContactListener(new RemoveEventListener() {
             @Override
             public void deleteEvent(int position) {
-                System.out.println("HELLLO FRANGGGGIN : "+selectedEventsData.size());
-                for(int i = 0; i<=selectedEventsData.size()-1; i++){
-                    System.out.println("Contient à la pos "+i+" : "+selectedEventsData.get(i));
-                }
             }
         });
 
@@ -235,25 +237,18 @@ public class DashboardFragment extends Fragment {
 
         } else if (requestCode == RESULT_LOAD_EVENT  && resultCode == Activity.RESULT_OK && null != data) {
             Uri selectedEventUri = data.getData();
-            selectedContactsUri.add(selectedEventUri);
+            selectedEventsUri.add(selectedEventUri);
             Cursor cursor = getActivity().getContentResolver().query(selectedEventUri, null, null,null,null);
             cursor.moveToFirst();
             final String se =  cursor.getString(cursor.getColumnIndex(CalendarContract.Events.TITLE));
             selectedEventsData.add(se);
             adapterEvent.setData(selectedEventsData);
             adapterEvent.notifyDataSetChanged();
-            System.out.println("MAAAAMENNN : "+selectedEventsData.size());
-            for(int i = 0; i<=selectedEventsData.size()-1; i++){
-                System.out.println("Contient à la pos "+i+" : "+selectedEventsData.get(i));
-            }
-
-            //eventTitleView.setText("Evenement : ".concat(selectedEventStr));
         }
     }
 
     public void updateSelectedContacts(){
 
     }
-
 
 }

@@ -24,13 +24,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <EditText
+            android:id="@+id/editTextTestEvent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="pictureUri" />
+
         <SearchView
             android:id="@+id/searchingContactView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:queryHint="Search By Contact">
-
-        </SearchView>
+            android:queryHint="Search By Contact"/>
 
         <SearchView
             android:id="@+id/searchingEventView"
@@ -48,7 +54,9 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/recyclerview_event" />
+            tools:listitem="@layout/recyclerview_event" >
+
+        </androidx.recyclerview.widget.RecyclerView>
 
     </LinearLayout>
 

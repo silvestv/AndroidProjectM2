@@ -9,21 +9,19 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-//import com.example.projetandroidsilvestre.model.ContactAnnotation;
 import com.example.projetandroidsilvestre.model.ContactAnnotation;
 import com.example.projetandroidsilvestre.model.EventAnnotation;
-import com.example.projetandroidsilvestre.model.PicAnnotation;
 import com.example.projetandroidsilvestre.model.Picture;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Picture.class}, version = 1, exportSchema = false)
+@Database(entities = {Picture.class, ContactAnnotation.class, EventAnnotation.class}, version = 1, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class SempicDatabase extends RoomDatabase {
 
     public abstract PictureDao pictureDao();
-    //public abstract PicAnnotationDao getPicAnnotationDao();
+    public abstract PicAnnotationDao getPicAnnotationDao();
 
     private static volatile SempicDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS = 7;
@@ -35,7 +33,7 @@ public abstract class SempicDatabase extends RoomDatabase {
             synchronized (SempicDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            SempicDatabase.class, "sempic2_database")
+                            SempicDatabase.class, "sempic5_database")
                             .addCallback(sRoomDatabaseCallback)
                             .build();
                 }
@@ -48,15 +46,10 @@ public abstract class SempicDatabase extends RoomDatabase {
         @Override
         public void onOpen(@NonNull SupportSQLiteDatabase db) {
             super.onOpen(db);
-
-            // If you want to keep data through app restarts,
-            // comment out the following block
             databaseWriteExecutor.execute(() -> {
 
                 PictureDao pDao= INSTANCE.pictureDao();
-               // PicAnnotationDao picAnotDao = INSTANCE.getPicAnnotationDao();
-                //pDao.deleteAll();
-                //TODO insert
+                PicAnnotationDao picAnotDao = INSTANCE.getPicAnnotationDao();
             });
         }
     };

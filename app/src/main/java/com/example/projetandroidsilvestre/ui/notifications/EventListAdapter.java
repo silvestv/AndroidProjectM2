@@ -1,6 +1,7 @@
 package com.example.projetandroidsilvestre.ui.notifications;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
 
     private final LayoutInflater mInflater;
     private List<Picture> mPictures;
+    private List<Uri> myUri;
     //private List<PicAnnotation> mPicAnot;
 
     EventListAdapter(Context context) { mInflater = LayoutInflater.from(context); }
@@ -38,46 +40,25 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
     }
 
     public void onBindViewHolder(EventViewHolder holder, int position) {
-        if (mPictures != null) {
-            Picture current = mPictures.get(position);
-            holder.eventItemView.setText(current.getPicture().toString());  //TODO a changer
+        if (myUri != null) {
+            Uri current = myUri.get(position);
+            holder.eventItemView.setText(current.toString());
         } else {
             // Covers the case of data not being ready yet.
-            holder.eventItemView.setText("no pictures");
+            holder.eventItemView.setText("no Uri");
         }
-
-        /*if (mPicAnot != null) {
-            PicAnnotation current = mPicAnot.get(position);
-            holder.eventItemView.setText(current.getContactUris().get(0).toString());  //TODO a changer
-        } else {
-            // Covers the case of data not being ready yet.
-            holder.eventItemView.setText("no pictures");
-        }*/
-
     }
 
-     void setPictures(List<Picture> picture){
-        mPictures = picture;
+    void setUri(List<Uri> uri){
+        myUri = uri;
         notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        if (mPictures != null)
-            return mPictures.size();
+        if (myUri != null)
+            return myUri.size();
         else return 0;
     }
-
-    /*void setPicAnot(List<PicAnnotation> picAnot){
-        mPicAnot = picAnot;
-        notifyDataSetChanged();
-    }
-
-    @Override
-    public int getItemCount() {
-        if (mPicAnot != null)
-            return mPicAnot.size();
-        else return 0;
-    }*/
 
 }

@@ -1,6 +1,7 @@
 package com.example.projetandroidsilvestre.model;
 
 import android.app.Application;
+import android.net.Uri;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -9,49 +10,54 @@ import com.example.projetandroidsilvestre.database.PicAnnotationDao;
 import com.example.projetandroidsilvestre.database.PictureDao;
 import com.example.projetandroidsilvestre.database.SempicDatabase;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class Repository {
 
-    private PictureDao mPictureDao;
-    private LiveData<List<Picture>> mAllPictures;
-
     private PicAnnotationDao mPicAnotDao;
-    //private LiveData<List<PicAnnotation>> mAllPicAnot;
 
-    // Note that in order to unit test the WordRepository, you have to remove the Application
-    // dependency. This adds complexity and much more code, and this sample is not about testing.
-    // See the BasicSample in the android-architecture-components repository at
-    // https://github.com/googlesamples
+    private LiveData<List<EventAnnotation>> mEventAnnotation;
+    private LiveData<List<ContactAnnotation>> mContactAnnotation;
+
     public Repository(Application application) {
         SempicDatabase db = SempicDatabase.getDatabase(application);
 
-        mPictureDao = db.pictureDao();
-        mAllPictures = mPictureDao.getAlphabetizedPictures();
+        mPicAnotDao = db.getPicAnnotationDao();
 
-        //mPicAnotDao = db.getPicAnnotationDao();
-        //mAllPicAnot = mPicAnotDao.loadAnnotations();
+        mEventAnnotation = mPicAnotDao.loadAllEventAnnotation();
+        mContactAnnotation = mPicAnotDao.loadAllContactAnnotation();
     }
 
-    public void insert(Picture picture) {
+    public void InsertEventAnnotation(EventAnnotation eventAnnotation){
         SempicDatabase.databaseWriteExecutor.execute(() -> {
-            System.out.println("PREEEEEEEEEEESDSSSQUE : "+picture.getPicture());
-            mPictureDao.insert(picture);
-
+           mPicAnotDao.insertPictureEvent(eventAnnotation);
         });
     }
 
-    public LiveData<List<Picture>> getAlphabetizedPictures() {
-        //SempicDatabase.databaseWriteExecutor.execute(() -> {
-            return mAllPictures;
-            //System.out.println("getAlphabetizedPictures object.size() = : "+this.mAllPictures.size());
-        //});
+    public void InsertContactAnnotation(ContactAnnotation contactAnnotation){
+        SempicDatabase.databaseWriteExecutor.execute(() -> {
+            mPicAnotDao.insertPictureContact(contactAnnotation);
+        });
     }
-/*
-    public LiveData<List<PicAnnotation>> getAllPicAnot(){
-        //SempicDatabase.databaseWriteExecutor.execute(() -> {
-        return mAllPicAnot;
-       //});
+
+   /* public void setAllEventsFromOnePicture(Uri myPictureUri){
+        System.out.println("repo : this.mAllEventsFromAGivenPicture = this.mPicAnotDao.loadEventsFromOneAnot "+myPictureUri+")");
+        SempicDatabase.databaseWriteExecutor.execute(() -> {
+            this.mAllEventsFromAGivenPicture = this.mPicAnotDao.loadEventsFromOneAnot(myPictureUri);
+        });
     }*/
+
+    /*public LiveData<List<Uri>> getAllEventsFromOnePicture(){
+        return mAllEventsFromAGivenPicture;
+    }*/
+
+    public LiveData<List<EventAnnotation>> getAllEventAnnotation(){
+        return mEventAnnotation;
+    }
+
+    public LiveData<List<ContactAnnotation>> getAllContactAnnotation(){
+        return mContactAnnotation;
+    }
 
 }
