@@ -48,6 +48,7 @@ public class HomeViewModel extends ViewModel {
         return result;
     }
 
+
     public LiveData<List<Uri>> getPicsUri(){
         //System.out.println("Vecteur size Toutes les images : " + mAllPicUriAnnotation.getValue().size());
         return mAllPicUriAnnotation;

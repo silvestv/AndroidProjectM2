@@ -34,14 +34,18 @@ public class NotificationsViewModel extends ViewModel {
     List<Uri> getAllEventsFromAGivenPicture(Uri myPictureUri){        //fonctionne
         System.out.println("Hello");
         if(this.mAllEventAnnotation.getValue()!=null){
+            System.out.println("my picture URI = "+myPictureUri.toString());
             Iterator<EventAnnotation> it = this.mAllEventAnnotation.getValue().iterator();
+            System.out.println("mAllEventAnnotation.getValue().size() = "+this.mAllEventAnnotation.getValue().size());
             EventAnnotation next ;
             List<Uri> result = new LinkedList<Uri>();
             int i = 0;
             while(it.hasNext()){
                 next = it.next();
-                if(next.getPicUri().toString().equals(myPictureUri.toString())){
-                    result.add(next.getEventUri());
+                System.out.println("picture tested : "+next.getK().getPicUri().toString());
+                if(next.getK().getPicUri().toString().equals(myPictureUri.toString())){
+                    System.out.println("add");
+                    result.add(next.getK().getEventUri());
                 }
                 i++;
             }
@@ -49,11 +53,31 @@ public class NotificationsViewModel extends ViewModel {
             return result;
         }
         else{
+            System.out.println("mAllEvent null");
             return null;
         }
     }
 
-
+    List<Uri> getAllPicturesFromTheDatabase(){
+        List<Uri> result = new LinkedList<Uri>();
+        if(this.mAllEventAnnotation.getValue()!=null){
+            Iterator<EventAnnotation> it = this.mAllEventAnnotation.getValue().iterator();
+            EventAnnotation next ;
+            while(it.hasNext()){
+                next = it.next();
+                result.add(next.getK().getPicUri());
+                }
+            }
+        if(this.mAllContactAnnotation.getValue()!=null){
+            Iterator<ContactAnnotation> it = this.mAllContactAnnotation.getValue().iterator();
+            ContactAnnotation next ;
+            while(it.hasNext()){
+                next = it.next();
+                result.add(next.getK().getPicUri());
+            }
+        }
+            return result;
+    }
 
     List<Uri> getAllContactsFromAGivenPicture(Uri myPictureUri){
         if(this.mAllContactAnnotation.getValue()!=null){
@@ -62,8 +86,8 @@ public class NotificationsViewModel extends ViewModel {
             List<Uri> result = new LinkedList<Uri>();
             while(it.hasNext()){
                 next = it.next();
-                if(next.getPicUri().toString().equals(myPictureUri.toString())){
-                    result.add(next.getContactUri());
+                if(next.getK().getPicUri().toString().equals(myPictureUri.toString())){
+                    result.add(next.getK().getContactUri());
                 }
             }
             return result;
@@ -80,8 +104,8 @@ public class NotificationsViewModel extends ViewModel {
             List<Uri> result = new LinkedList<Uri>();
             while(it.hasNext()){
                 next = it.next();
-                if(next.getContactUri().toString().equals(myContactUri.toString())){
-                    result.add(next.getPicUri());
+                if(next.getK().getContactUri().toString().equals(myContactUri.toString())){
+                    result.add(next.getK().getPicUri());
                 }
             }
             return result;
@@ -98,8 +122,8 @@ public class NotificationsViewModel extends ViewModel {
             List<Uri> result = new LinkedList<Uri>();
             while(it.hasNext()){
                 next = it.next();
-                if(next.getEventUri().toString().equals(myEventUri.toString())){
-                    result.add(next.getPicUri());
+                if(next.getK().getEventUri().toString().equals(myEventUri.toString())){
+                    result.add(next.getK().getPicUri());
                 }
             }
             return result;
@@ -125,8 +149,8 @@ public class NotificationsViewModel extends ViewModel {
                     Uri currentPicture ;
                     while(it2.hasNext()){
                         currentPicture = it2.next();
-                        if(next.getPicUri().toString().equals(currentPicture.toString())){
-                            result.add(next.getEventUri());
+                        if(next.getK().getPicUri().toString().equals(currentPicture.toString())){
+                            result.add(next.getK().getEventUri());
                         }
                     }
                 }
@@ -156,8 +180,8 @@ public class NotificationsViewModel extends ViewModel {
                     Uri currentPicture ;
                     while(it2.hasNext()){
                         currentPicture = it2.next();
-                        if(next.getPicUri().toString().equals(currentPicture.toString())){
-                            result.add(next.getContactUri());
+                        if(next.getK().getPicUri().toString().equals(currentPicture.toString())){
+                            result.add(next.getK().getContactUri());
                         }
                     }
                 }

@@ -7,33 +7,54 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Transaction;
 
 import com.example.projetandroidsilvestre.model.ContactAnnotation;
 import com.example.projetandroidsilvestre.model.EventAnnotation;
 
+import java.util.Iterator;
 import java.util.List;
 
 @Dao
-public interface PicAnnotationDao {
+public abstract class PicAnnotationDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insertPictureEvent(EventAnnotation a);
+    public abstract void insertPictureEvent(EventAnnotation a);
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insertPictureContact(ContactAnnotation a);
+    public abstract void insertPictureContact(ContactAnnotation a);
 
     @Query("DELETE FROM event_annotation")
-    void deleteAllEvent();
+    public abstract void deleteAllEvent();
 
     @Query("DELETE FROM contact_annotation")
-    void deleteAllContacts();
+    public abstract void deleteAllContacts();
 
     @Query("Select * from event_annotation")
-    LiveData<List<EventAnnotation>> loadAllEventAnnotation();
+    public abstract LiveData<List<EventAnnotation>> loadAllEventAnnotation();
 
     @Query("Select * from contact_annotation")
-    LiveData<List<ContactAnnotation>> loadAllContactAnnotation();
+    public abstract LiveData<List<ContactAnnotation>> loadAllContactAnnotation();
 
     @Query("SELECT DISTINCT picUri from contact_annotation UNION SELECT DISTINCT picUri from event_annotation")
-    LiveData<List<Uri>> loadAllPicUriAnnotation();
+    public abstract LiveData<List<Uri>> loadAllPicUriAnnotation();
+
+    @Transaction
+    public void insertAllEvent(List<EventAnnotation> li) {
+        Iterator<EventAnnotation> it = li.iterator();
+        while(it.hasNext()){
+            System.out.println("inserting an annot");
+            insertPictureEvent(it.next());
+        }
+    }
+
+    @Transaction
+    public void insertAllContact(List<ContactAnnotation> li) {
+        Iterator<ContactAnnotation> it = li.iterator();
+        while(it.hasNext()){
+            System.out.println("inserting a contact");
+            insertPictureContact(it.next());
+        }
+    }
+
 }

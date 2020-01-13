@@ -58,7 +58,9 @@ public class NotificationsFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                List<Uri> l = notificationsViewModel.getAllEventsFromAGivenPicture(Uri.parse("content://com.google.android.apps.photos.contentprovider/-1/1/content%3A%2F%2Fmedia%2Fexternal%2Fimages%2Fmedia%2F38/ORIGINAL/NONE/731695736".toString())); //exemple de fonctionnement pour récupérer tout les évènements de la photo passée en paramètre
+                System.out.println("nouvelle Uri : "+editable.toString());
+                List<Uri> l = notificationsViewModel.getAllEventsFromAGivenPicture(Uri.parse(editable.toString())); //exemple de fonctionnement pour récupérer tout les évènements de la photo passée en paramètre
+                System.out.println("l.size() = "+l.size());
                 eventAdapter.setUri(l);
                 System.out.println("size events : "+l.size());
             }

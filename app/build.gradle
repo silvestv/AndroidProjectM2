@@ -76,4 +76,6 @@ dependencies {
     androidTestImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"
     implementation 'androidx.recyclerview:recyclerview-selection:1.0.0'
 
+    debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
+
 }
