@@ -65,8 +65,9 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="100dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/startSearchBtn" />
+            app:layout_constraintTop_toBottomOf="@+id/startSearchBtn"
             tools:listitem="@layout/recyclerview_item_home" />
+
 
     </LinearLayout>
 

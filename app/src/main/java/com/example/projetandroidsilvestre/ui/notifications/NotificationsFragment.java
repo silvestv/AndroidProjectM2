@@ -5,10 +5,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.provider.ContactsContract;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +53,11 @@ public class NotificationsFragment extends Fragment {
     private RecyclerView.LayoutManager layoutManagerEventSearch;
     private ArrayList<Uri> selectedEventsUri = new ArrayList<>();
     private ArrayList<String> selectedEventsData = new ArrayList<>();
+
+    private Button launchSearchBtn;
+    private RecyclerView recyclerViewResultSearch;
+    private ResultListAdapter adapterResultSearch;
+    private RecyclerView.LayoutManager layoutManagerResultSearch;
 
     private static int RESULT_LOAD_CONTACT =1;
     private static int RESULT_LOAD_EVENT =2;
@@ -134,10 +142,56 @@ public class NotificationsFragment extends Fragment {
             @Override
             public void deleteEvent(int position) {
                 //selectedContactsData.remove(position);
+
             }
         });
 
+        launchSearchBtn = (Button) root.findViewById(R.id.startSearchBtn);
+
+        recyclerViewResultSearch = (RecyclerView) root.findViewById(R.id.recyclerViewResult);
+        recyclerViewResultSearch.setHasFixedSize(true);
+        layoutManagerResultSearch = new LinearLayoutManager(getActivity());
+        recyclerViewResultSearch.setLayoutManager(layoutManagerResultSearch);
+        adapterResultSearch = new ResultListAdapter(new ArrayList<Bitmap>(), getActivity());
+        recyclerViewResultSearch.setAdapter(adapterResultSearch);
+
+        launchSearchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    if(ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_CONTACTS) !=
+                            PackageManager.PERMISSION_GRANTED){
+                        ActivityCompat.requestPermissions(getActivity(), new String[] {Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS}, RESULT_LOAD_CONTACT);
+                    } else {
+                        //C'EST ICI QUE DOIVENT ETRE TESTER LES FONCTIONS DE RECHERCHE EN PARAMETREE DE l'ARRAYLIST DYNAMICURISPICS !!!
+                        ArrayList<Uri> dynamicUrisResult = new ArrayList<Uri>(notificationsViewModel.getAllPicturesFromTheDatabase());
+                        System.out.println(dynamicUrisResult.size());
+                        ArrayList<Bitmap> dynamicListPicsBitmapResult = new ArrayList<Bitmap>();
+                        for (Uri u : dynamicUrisResult){ ;
+                            dynamicListPicsBitmapResult.add(findUriToPictureBitmap(u));
+                        }
+                        adapterResultSearch.setBitmapSet(dynamicListPicsBitmapResult);
+                        adapterResultSearch.notifyDataSetChanged();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
         return root;
+    }
+
+    public Bitmap findUriToPictureBitmap(Uri resultUri){
+
+        String[] filePathColumn = { MediaStore.Images.Media.DATA };
+        Cursor cursor = getActivity().getContentResolver().query(resultUri,
+                filePathColumn, null, null, null);
+        cursor.moveToFirst();
+
+        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+        String picturePath = cursor.getString(columnIndex);
+        cursor.close();
+        return BitmapFactory.decodeFile(picturePath);
     }
 
     @Override

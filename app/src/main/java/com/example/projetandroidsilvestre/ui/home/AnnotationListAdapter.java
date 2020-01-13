@@ -49,17 +49,11 @@ public class AnnotationListAdapter extends RecyclerView.Adapter<AnnotationListAd
         return vh;
     }
     public void onBindViewHolder(AnnotationListAdapter.AnnotationViewHolder holder, int position) {
-        System.out.println("YYYYYYYYYYYYYYYY"+mPicsSet.size());
-        System.out.println(position);
-        System.out.println(holder.annotationImg);
         holder.annotationImg.setImageBitmap(mPicsSet.get(position));
     }
 
     public void setBitmapSet(ArrayList<Bitmap> picsSet) {
         this.mPicsSet = new ArrayList<Bitmap>(picsSet);
-        for(Bitmap b : picsSet){
-            System.out.println("FRERRE : "+b.toString());
-        }
     }
 
     @Override
