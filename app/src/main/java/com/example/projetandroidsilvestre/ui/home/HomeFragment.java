@@ -48,7 +48,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onChanged(List<Uri> allPicsUri) {
 
-              ArrayList<Uri> dynamicListPicsUri = new ArrayList<Uri>(homeViewModel.getAllPicturesFromTheDatabase());
+             /* ArrayList<Uri> dynamicListPicsUri = new ArrayList<Uri>(homeViewModel.getAllPicturesFromTheDatabase());
                 ArrayList<Bitmap> dynamicListPics = new ArrayList<Bitmap>();
                 for (Uri u : dynamicListPicsUri){
                     //System.out.println("COUCOUCOUC"+u.toString());
@@ -56,7 +56,7 @@ public class HomeFragment extends Fragment {
                 }
                 System.out.println("COUCOUCOUC"+dynamicListPics.size());
                 adapterAnnotations.setBitmapSet(dynamicListPics);
-                adapterAnnotations.notifyDataSetChanged();
+                adapterAnnotations.notifyDataSetChanged();*/
             }
         });
 

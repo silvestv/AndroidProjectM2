@@ -1,4 +1,4 @@
-package com.example.projetandroidsilvestre.ui.dashboard;
+package com.example.projetandroidsilvestre.ui.notifications;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -15,19 +15,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ItemSelectedListAdapter extends RecyclerView.Adapter<ItemSelectedListAdapter.ItemSelectedViewHolder> {
+public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemViewHolder> {
     private ArrayList<String> mDataset;
     private Context mContext;
-    private List<RemoveEventListener> removeItemListeners;
+    private List<RemoveEventSearchListener> removeItemsListeners;
     private final LayoutInflater mInflater;
-   // private int pos;
+    // private int pos;
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
-    public static class ItemSelectedViewHolder extends RecyclerView.ViewHolder {
+    public static class ItemViewHolder extends RecyclerView.ViewHolder {
         public TextView textView;
         public Button deleteItemBtn;
-        public ItemSelectedViewHolder(View v) {
+        public ItemViewHolder(View v) {
             super(v);
             textView = v.findViewById(R.id.itemSelectedTv);
             deleteItemBtn = v.findViewById(R.id.deleteItem);
@@ -35,7 +35,7 @@ public class ItemSelectedListAdapter extends RecyclerView.Adapter<ItemSelectedLi
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public ItemSelectedListAdapter(ArrayList<String> myDataset, Context context) {
+    public ItemListAdapter(ArrayList<String> myDataset, Context context) {
         mDataset = myDataset;
         mContext = context;
         mInflater = LayoutInflater.from(context);
@@ -43,19 +43,19 @@ public class ItemSelectedListAdapter extends RecyclerView.Adapter<ItemSelectedLi
 
     // Create new views (invoked by the layout manager)
     @Override
-    public ItemSelectedListAdapter.ItemSelectedViewHolder onCreateViewHolder(ViewGroup parent,
-                                                                                int viewType) {
+    public ItemListAdapter.ItemViewHolder onCreateViewHolder(ViewGroup parent,
+                                                                             int viewType) {
         // create a new view
         //TextView itemView = (TextView)mInflater.inflate(R.layout.recyclerview_item, parent, false);
         View v = mInflater
                 .inflate(R.layout.recyclerview_itemselected, parent, false);
-        ItemSelectedViewHolder vh = new ItemSelectedViewHolder(v);
+        ItemViewHolder vh = new ItemViewHolder(v);
         return vh;
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(ItemSelectedViewHolder holder, final int position) {
+    public void onBindViewHolder(ItemViewHolder holder, final int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
 
@@ -68,14 +68,16 @@ public class ItemSelectedListAdapter extends RecyclerView.Adapter<ItemSelectedLi
                 mDataset.remove(position);
                 System.out.println("Postio Remove  : "+position);
                 notifyDataSetChanged();
+                System.out.println("CHIIIIIIIIIIIIIIERRRR");
                 notifyDeleted(position);
+
             }
         });
     }
 
     public void notifyDeleted(int pos) {
-        for(int i = 0; i < removeItemListeners.size(); i++){
-            removeItemListeners.get(i).deleteEvent(pos);
+        for(int i = 0; i < removeItemsListeners.size(); i++){
+            removeItemsListeners.get(i).deleteEvent(pos);
         }
     }
 
@@ -86,12 +88,12 @@ public class ItemSelectedListAdapter extends RecyclerView.Adapter<ItemSelectedLi
     }
 
 
-    public void addRemoveContactListener(RemoveEventListener Eventlistener) {
-        if (removeItemListeners==null) {
-            removeItemListeners=new ArrayList<>();
+    public void addRemoveContactListener(RemoveEventSearchListener Eventlistener) {
+        if (removeItemsListeners==null) {
+            removeItemsListeners=new ArrayList<>();
         }
         System.out.println("EventListe LAAAAAAAAAAAAAAAAAAAAAAAAAA: "+Eventlistener);
-        removeItemListeners.add(Eventlistener);
+        removeItemsListeners.add(Eventlistener);
     }
 
     public void setData(ArrayList<String> dataSet) {
