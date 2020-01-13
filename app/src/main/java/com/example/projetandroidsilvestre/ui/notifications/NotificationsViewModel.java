@@ -53,26 +53,7 @@ public class NotificationsViewModel extends ViewModel {
         }
     }
 
-    List<Uri> getAllPicturesFromTheDatabase(){
-        List<Uri> result = new LinkedList<Uri>();
-        if(this.mAllEventAnnotation.getValue()!=null){
-            Iterator<EventAnnotation> it = this.mAllEventAnnotation.getValue().iterator();
-            EventAnnotation next ;
-            while(it.hasNext()){
-                next = it.next();
-                result.add(next.getPicUri());
-                }
-            }
-        if(this.mAllContactAnnotation.getValue()!=null){
-            Iterator<ContactAnnotation> it = this.mAllContactAnnotation.getValue().iterator();
-            ContactAnnotation next ;
-            while(it.hasNext()){
-                next = it.next();
-                result.add(next.getPicUri());
-            }
-        }
-            return result;
-    }
+
 
     List<Uri> getAllContactsFromAGivenPicture(Uri myPictureUri){
         if(this.mAllContactAnnotation.getValue()!=null){

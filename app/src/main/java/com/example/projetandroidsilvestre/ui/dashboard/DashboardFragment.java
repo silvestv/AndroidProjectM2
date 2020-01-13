@@ -134,10 +134,11 @@ public class DashboardFragment extends Fragment {
         saveAnnotDbButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("ImageUriSaved : "+selectedImgUri.toString());
+                //System.out.println("ImageUriSaved : "+selectedImgUri.toString());
                 if((selectedEventsUri!=null)&&(selectedImgUri!=null)){
                     Iterator<Uri> it = selectedEventsUri.iterator();
                     while(it.hasNext()){
+                        System.out.println("ICIIIIIIIIIIFERERERREE");
                         EventAnnotation ev = new EventAnnotation(selectedImgUri, it.next());
                         System.out.println("selected image uri"+selectedImgUri.toString());
                         dashboardViewModel.insertEventAnnotation(ev);
@@ -199,6 +200,7 @@ public class DashboardFragment extends Fragment {
 
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
             String picturePath = cursor.getString(columnIndex);
+            System.out.println("PPPPPPP : "+picturePath);
             cursor.close();
 
             ImageView avatarChosen = (ImageView) root.findViewById(R.id.avatarChosen);

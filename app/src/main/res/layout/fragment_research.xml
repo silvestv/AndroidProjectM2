@@ -32,18 +32,17 @@
             android:inputType="textPersonName"
             android:text="pictureUri" />
 
-        <SearchView
-            android:id="@+id/searchingContactView"
+        <Button
+            android:id="@+id/searchingByEvent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:queryHint="Search By Contact"/>
+            android:text="Rechercher par evenement " />
 
-        <SearchView
-            android:id="@+id/searchingEventView"
+        <Button
+            android:id="@+id/searchingByContact"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:queryHint="Search By Event" />
+            android:text="Rechercher par contact" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerviewEvent"
@@ -57,6 +56,15 @@
             tools:listitem="@layout/recyclerview_event" >
 
         </androidx.recyclerview.widget.RecyclerView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewResult"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/recyclerview_item_home"/>
 
     </LinearLayout>
 

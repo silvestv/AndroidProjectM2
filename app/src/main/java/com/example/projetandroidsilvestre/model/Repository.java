@@ -4,13 +4,10 @@ import android.app.Application;
 import android.net.Uri;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import com.example.projetandroidsilvestre.database.PicAnnotationDao;
-import com.example.projetandroidsilvestre.database.PictureDao;
 import com.example.projetandroidsilvestre.database.SempicDatabase;
 
-import java.util.LinkedList;
 import java.util.List;
 
 public class Repository {
@@ -19,6 +16,7 @@ public class Repository {
 
     private LiveData<List<EventAnnotation>> mEventAnnotation;
     private LiveData<List<ContactAnnotation>> mContactAnnotation;
+    private LiveData<List<Uri>> mAllPicUriAnnotation;
 
     public Repository(Application application) {
         SempicDatabase db = SempicDatabase.getDatabase(application);
@@ -27,6 +25,7 @@ public class Repository {
 
         mEventAnnotation = mPicAnotDao.loadAllEventAnnotation();
         mContactAnnotation = mPicAnotDao.loadAllContactAnnotation();
+        mAllPicUriAnnotation = mPicAnotDao.loadAllPicUriAnnotation();
     }
 
     public void InsertEventAnnotation(EventAnnotation eventAnnotation){
@@ -58,6 +57,10 @@ public class Repository {
 
     public LiveData<List<ContactAnnotation>> getAllContactAnnotation(){
         return mContactAnnotation;
+    }
+
+    public LiveData<List<Uri>> getAllPicUriAnnotation(){
+        return mAllPicUriAnnotation;
     }
 
 }

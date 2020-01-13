@@ -1,5 +1,7 @@
 package com.example.projetandroidsilvestre.database;
 
+import android.net.Uri;
+
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
@@ -31,4 +33,7 @@ public interface PicAnnotationDao {
 
     @Query("Select * from contact_annotation")
     LiveData<List<ContactAnnotation>> loadAllContactAnnotation();
+
+    @Query("SELECT DISTINCT picUri from contact_annotation UNION SELECT DISTINCT picUri from event_annotation")
+    LiveData<List<Uri>> loadAllPicUriAnnotation();
 }

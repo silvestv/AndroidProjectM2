@@ -35,9 +35,9 @@
                 android:id="@+id/listAnnotRcl"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="50dp">
-
-            </androidx.recyclerview.widget.RecyclerView>
+                android:layout_marginTop="50dp"
+                android:layout_marginBottom="100dp"
+                tools:listitem="@layout/recyclerview_item_home"></androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
 
     </ScrollView>
