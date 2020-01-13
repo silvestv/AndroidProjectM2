@@ -40,6 +40,7 @@ import com.example.projetandroidsilvestre.model.Repository;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
@@ -144,18 +145,29 @@ public class DashboardFragment extends Fragment {
             public void onClick(View view) {
                 if((selectedEventsUri!=null)&&(selectedImgUri!=null)){
                     Iterator<Uri> it = selectedEventsUri.iterator();
+                    System.out.println("selected image uri "+selectedImgUri.toString());
+                    List<EventAnnotation> li = new LinkedList<EventAnnotation>();
                     while(it.hasNext()){
-                        EventAnnotation ev = new EventAnnotation(selectedImgUri, it.next());
-                        System.out.println("selected image uri"+selectedImgUri.toString());
-                        dashboardViewModel.insertEventAnnotation(ev);
+                        Uri eventUri = it.next();
+                        EventAnnotation ev = new EventAnnotation(new EventAnnotation.Key(selectedImgUri, eventUri));
+                        System.out.println("selected Annotation uri "+eventUri.toString());
+                        //dashboardViewModel.insertEventAnnotation(ev);
+                        li.add(ev);
                     }
+                    dashboardViewModel.insertEventAnnotation(li);
                 }
                 if((selectedContactsUri!=null)&&(selectedImgUri!=null)){
                     Iterator<Uri> it = selectedContactsUri.iterator();
+                    System.out.println("selected image uri "+selectedImgUri.toString());
+                    List<ContactAnnotation> li = new LinkedList<ContactAnnotation>();
                     while(it.hasNext()){
-                        ContactAnnotation ca = new ContactAnnotation(selectedImgUri, it.next());
-                        dashboardViewModel.insertContactAnnotation(ca);
+                        Uri contactUri = it.next();
+                        ContactAnnotation ev = new ContactAnnotation(new ContactAnnotation.Key(selectedImgUri, contactUri));
+                        System.out.println("selected contact uri "+contactUri.toString());
+                        //dashboardViewModel.insertContactAnnotation(ev);
+                        li.add(ev);
                     }
+                    dashboardViewModel.insertContactAnnotation(li);
                 }
             }
         });

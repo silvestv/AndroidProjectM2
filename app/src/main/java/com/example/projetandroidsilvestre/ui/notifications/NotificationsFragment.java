@@ -65,7 +65,9 @@ public class NotificationsFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
+                System.out.println("nouvelle Uri : "+editable.toString());
                 List<Uri> l = notificationsViewModel.getAllEventsFromAGivenPicture(Uri.parse(editable.toString())); //exemple de fonctionnement pour récupérer tout les évènements de la photo passée en paramètre
+                System.out.println("l.size() = "+l.size());
                 eventAdapter.setUri(l);
             }
         });

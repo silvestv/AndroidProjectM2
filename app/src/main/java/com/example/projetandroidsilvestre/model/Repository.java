@@ -7,7 +7,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.projetandroidsilvestre.database.PicAnnotationDao;
-import com.example.projetandroidsilvestre.database.PictureDao;
 import com.example.projetandroidsilvestre.database.SempicDatabase;
 
 import java.util.LinkedList;
@@ -31,6 +30,7 @@ public class Repository {
 
     public void InsertEventAnnotation(EventAnnotation eventAnnotation){
         SempicDatabase.databaseWriteExecutor.execute(() -> {
+            System.out.println("insertion dans la bdd ---");
            mPicAnotDao.insertPictureEvent(eventAnnotation);
         });
     }
@@ -56,8 +56,18 @@ public class Repository {
         return mEventAnnotation;
     }
 
-    public LiveData<List<ContactAnnotation>> getAllContactAnnotation(){
-        return mContactAnnotation;
+    public LiveData<List<ContactAnnotation>> getAllContactAnnotation(){ return mContactAnnotation; }
+
+    public void InsertEventAnnotation(List<EventAnnotation> li){
+        SempicDatabase.databaseWriteExecutor.execute(() -> {
+            mPicAnotDao.insertAllEvent(li);
+        });
+    }
+
+    public void InsertContactAnnotation(List<ContactAnnotation> li){
+        SempicDatabase.databaseWriteExecutor.execute(() -> {
+            mPicAnotDao.insertAllContact(li);
+        });
     }
 
 }

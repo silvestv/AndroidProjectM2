@@ -16,15 +16,14 @@ import com.example.projetandroidsilvestre.model.Picture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Picture.class, ContactAnnotation.class, EventAnnotation.class}, version = 1, exportSchema = false)
+@Database(entities = {ContactAnnotation.class, EventAnnotation.class}, version = 1, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class SempicDatabase extends RoomDatabase {
 
-    public abstract PictureDao pictureDao();
     public abstract PicAnnotationDao getPicAnnotationDao();
 
     private static volatile SempicDatabase INSTANCE;
-    private static final int NUMBER_OF_THREADS = 7;
+    private static final int NUMBER_OF_THREADS = 10;
     static public final ExecutorService databaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
@@ -33,7 +32,7 @@ public abstract class SempicDatabase extends RoomDatabase {
             synchronized (SempicDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            SempicDatabase.class, "sempic5_database")
+                            SempicDatabase.class, "database_4")
                             .addCallback(sRoomDatabaseCallback)
                             .build();
                 }
@@ -48,7 +47,7 @@ public abstract class SempicDatabase extends RoomDatabase {
             super.onOpen(db);
             databaseWriteExecutor.execute(() -> {
 
-                PictureDao pDao= INSTANCE.pictureDao();
+                //PictureDao pDao= INSTANCE.pictureDao();
                 PicAnnotationDao picAnotDao = INSTANCE.getPicAnnotationDao();
             });
         }

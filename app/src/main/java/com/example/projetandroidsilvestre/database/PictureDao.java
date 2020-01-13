@@ -1,5 +1,5 @@
 package com.example.projetandroidsilvestre.database;
-
+/*
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.room.Dao;
@@ -28,4 +28,4 @@ public interface PictureDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertAll(List<Picture> picture);
 
-}
+}*/
