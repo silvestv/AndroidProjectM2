@@ -11,7 +11,6 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.projetandroidsilvestre.model.ContactAnnotation;
 import com.example.projetandroidsilvestre.model.EventAnnotation;
-import com.example.projetandroidsilvestre.model.Picture;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -32,7 +31,7 @@ public abstract class SempicDatabase extends RoomDatabase {
             synchronized (SempicDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            SempicDatabase.class, "database_4")
+                            SempicDatabase.class, "database_6")
                             .addCallback(sRoomDatabaseCallback)
                             .build();
                 }

@@ -21,8 +21,13 @@ public class NotificationsViewModel extends ViewModel {
     private Application mApplication;
 
     private LiveData<List<Uri>> mAllPicUriAnnotation;
+    private LiveData<List<Uri>> mAllPicUriFromAGivenContact;
     private LiveData<List<ContactAnnotation>> mAllContactAnnotation;
     private LiveData<List<EventAnnotation>> mAllEventAnnotation;
+
+    private LiveData<List<Uri>> mAllPicUriFromSomeContactsSomeEvents;
+    private LiveData<List<Uri>> mAllPicUriFromSomeContacts;
+    private LiveData<List<Uri>> mAllPicUriFromSomeEvents;
 
     public NotificationsViewModel(Application application) {
         super();
@@ -32,6 +37,7 @@ public class NotificationsViewModel extends ViewModel {
         mAllContactAnnotation = mRepo.getAllContactAnnotation();
         mAllEventAnnotation = mRepo.getAllEventAnnotation();
     }
+
 
     ArrayList<Uri> getAllPicturesFromTheDatabase(){
         ArrayList<Uri> result = new ArrayList<Uri>();
@@ -49,87 +55,72 @@ public class NotificationsViewModel extends ViewModel {
         return result;
     }
 
-    List<Uri> getAllEventsFromAGivenPicture(Uri myPictureUri){        //fonctionne
-        System.out.println("Hello");
+    List<Uri> getAllEventsFromAGivenPicture(Uri myPictureUri){
+        List<Uri> result = new LinkedList<Uri>();
         if(this.mAllEventAnnotation.getValue()!=null){
-            System.out.println("my picture URI = "+myPictureUri.toString());
+          //  System.out.println("my picture URI = "+myPictureUri.toString());
             Iterator<EventAnnotation> it = this.mAllEventAnnotation.getValue().iterator();
-            System.out.println("mAllEventAnnotation.getValue().size() = "+this.mAllEventAnnotation.getValue().size());
+        //    System.out.println("mAllEventAnnotation.getValue().size() = "+this.mAllEventAnnotation.getValue().size());
             EventAnnotation next ;
-            List<Uri> result = new LinkedList<Uri>();
             int i = 0;
             while(it.hasNext()){
                 next = it.next();
-                System.out.println("picture tested : "+next.getK().getPicUri().toString());
+              //  System.out.println("picture tested : "+next.getK().getPicUri().toString());
                 if(next.getK().getPicUri().toString().equals(myPictureUri.toString())){
-                    System.out.println("add");
+                //    System.out.println("add");
                     result.add(next.getK().getEventUri());
                 }
                 i++;
             }
-            System.out.println("nb event registred : "+i);
-            return result;
         }
-        else{
-            System.out.println("mAllEvent null");
-            return null;
-        }
+        return result;
     }
 
 
 
     List<Uri> getAllContactsFromAGivenPicture(Uri myPictureUri){
+        List<Uri> result = new LinkedList<Uri>();
         if(this.mAllContactAnnotation.getValue()!=null){
             Iterator<ContactAnnotation> it = this.mAllContactAnnotation.getValue().iterator();
             ContactAnnotation next ;
-            List<Uri> result = new LinkedList<Uri>();
             while(it.hasNext()){
                 next = it.next();
                 if(next.getK().getPicUri().toString().equals(myPictureUri.toString())){
                     result.add(next.getK().getContactUri());
                 }
             }
-            return result;
         }
-        else{
-            return null;
-        }
+        return result;
     }
 
     List<Uri> getAllPicturesFromAGivenContact(Uri myContactUri){
+        List<Uri> result = new LinkedList<Uri>();
         if(this.getAllContactAnnotations().getValue()!=null){
             Iterator<ContactAnnotation> it = this.mAllContactAnnotation.getValue().iterator();
             ContactAnnotation next ;
-            List<Uri> result = new LinkedList<Uri>();
             while(it.hasNext()){
                 next = it.next();
                 if(next.getK().getContactUri().toString().equals(myContactUri.toString())){
                     result.add(next.getK().getPicUri());
                 }
             }
-            return result;
         }
-        else{
-            return null;
-        }
+        return result;
     }
 
     List<Uri> getAllPicturesFromAGivenEvent(Uri myEventUri){
+        List<Uri> result = new LinkedList<Uri>();
         if(this.getAllEventAnnotations().getValue()!=null){
             Iterator<EventAnnotation> it = this.mAllEventAnnotation.getValue().iterator();
             EventAnnotation next ;
-            List<Uri> result = new LinkedList<Uri>();
             while(it.hasNext()){
                 next = it.next();
                 if(next.getK().getEventUri().toString().equals(myEventUri.toString())){
                     result.add(next.getK().getPicUri());
                 }
             }
-            return result;
         }
-        else{
-            return null;
-        }
+        return result;
     }
 
 
@@ -195,16 +186,101 @@ public class NotificationsViewModel extends ViewModel {
         }
     }
 
+    List<Uri> getAllPicturesFromSomeEvents(List<Uri> myEventsUri){
+        List<Uri> result = new LinkedList<Uri>();
+        Iterator<Uri> it = myEventsUri.iterator();
+        result = getAllPicturesFromAGivenEvent(it.next());
+        List<Uri> nextListOfPicturesFromAnEventUri;
+        while(it.hasNext()){
+            nextListOfPicturesFromAnEventUri = getAllContactsFromAGivenEvent(it.next());
+            result = commonPicturesBetween(result,nextListOfPicturesFromAnEventUri);
+        }
+        return result;
+    }
 
 
+    List<Uri> getAllPicturesFromSomeContacts(List<Uri> myContactsUri){
+        List<Uri> result = new LinkedList<Uri>();
+        Iterator<Uri> it = myContactsUri.iterator();
+        result = getAllPicturesFromAGivenContact(it.next());
+        List<Uri> nextListOfPicturesFromAContactUri;
+        while(it.hasNext()){
+            nextListOfPicturesFromAContactUri = getAllPicturesFromAGivenContact(it.next());
+            result = commonPicturesBetween(result,nextListOfPicturesFromAContactUri);
+        }
+        return result;
+    }
+
+    List<Uri> getAllPicturesFromSomeContactsAndEvents(List<Uri> myContactsUri, List<Uri> myEventsUri){
+        List<Uri> result = new LinkedList<Uri>();
+        if(myContactsUri.size()==0){
+            if(myEventsUri.size()!=0){
+                result = getAllPicturesFromSomeEvents(myEventsUri);
+            }
+            else{
+                result = getAllPicturesFromTheDatabase();
+            }
+        }
+        else{
+            result = getAllPicturesFromSomeContacts(myContactsUri);
+            if(myEventsUri.size()!=0){
+                List<Uri> picturesFromMyEvents = getAllPicturesFromSomeEvents(myEventsUri);
+                result = commonPicturesBetween(result,picturesFromMyEvents);
+            }
+        }
+        return result;
+    }
+
+    private List<Uri> commonPicturesBetween(List<Uri> listA, List<Uri> listB){
+        List<Uri> result = new LinkedList<Uri>();
+        Iterator<Uri> it = listA.iterator();
+        Uri currentUri;
+        while(it.hasNext()){
+            currentUri = it.next();
+            if(listB.contains((Uri)currentUri)){
+                result.add(currentUri);
+            }
+        }
+        return result;
+    }
 
     LiveData<List<EventAnnotation>> getAllEventAnnotations(){
         return this.mAllEventAnnotation;
     }
 
     LiveData<List<ContactAnnotation>> getAllContactAnnotations(){ return this.mAllContactAnnotation; }
-    public LiveData<List<Uri>> getPicsUri(){
-        //System.out.println("Vecteur size Toutes les images : " + mAllPicUriAnnotation.getValue().size());
-        return mAllPicUriAnnotation;
+
+
+    public void setAllPictureUriFromAGivenContact(Uri myContactUri){
+        mAllPicUriFromAGivenContact = this.mRepo.getAllPictureFromAGivenContact(myContactUri);
     }
+    public LiveData<List<Uri>> getAllPictureUriTest(){
+        return this.mAllPicUriFromAGivenContact;
+    }
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////
+    public void setAllPictureUriFromSomeContactsSomeEvents(List<Uri> myContacts, List<Uri> myEvents){
+        mAllPicUriFromSomeContactsSomeEvents = this.mRepo.getAllPictureFromSomeContactSomeEvents(myContacts, myEvents);
+    }
+    public LiveData<List<Uri>> getAllPictureUriFromSomeContactsSomeEvents(){
+        return this.mAllPicUriFromSomeContactsSomeEvents;
+    }
+
+
+    public void setAllPictureUriFromSomeContacts(List<Uri> myContacts){
+        mAllPicUriFromSomeContacts = this.mRepo.getAllPictureFromSomeContact(myContacts);
+    }
+    public LiveData<List<Uri>> getAllPictureUriFromSomeContacts(){
+        return this.mAllPicUriFromSomeContacts;
+    }
+
+    public void setAllPictureUriFromSomeEvents(List<Uri> myEvents){
+        mAllPicUriFromSomeEvents = this.mRepo.getAllPictureFromSomeEvents(myEvents);
+    }
+    public LiveData<List<Uri>> getAllPictureUriFromSomeEvents(){
+        return this.mAllPicUriFromSomeEvents;
+    }
+
+
 }

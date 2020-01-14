@@ -81,12 +81,6 @@ public class NotificationsFragment extends Fragment {
             }
         });
 
-        notificationsViewModel.getPicsUri().observe(this, new Observer<List<Uri>>() {
-            @Override
-            public void onChanged(List<Uri> uris) {
-
-            }
-        });
 
         serachingContactBtn = (Button) root.findViewById(R.id.searchingByContactBtn);
         serachingContactBtn.setOnClickListener(new View.OnClickListener() {
@@ -117,7 +111,7 @@ public class NotificationsFragment extends Fragment {
         adapterContactSearch.addRemoveContactListener(new RemoveEventSearchListener() {
             @Override
             public void deleteEvent(int position) {
-                //selectedContactsData.remove(position);
+                selectedContactsUri.remove(position);
             }
         });
         searchingEventBtn = (Button) root.findViewById(R.id.searchingByEventBtn);
@@ -148,7 +142,7 @@ public class NotificationsFragment extends Fragment {
         adapterEventSearch.addRemoveContactListener(new RemoveEventSearchListener() {
             @Override
             public void deleteEvent(int position) {
-                //selectedContactsData.remove(position);
+                selectedEventsUri.remove(position);
 
             }
         });
@@ -165,23 +159,51 @@ public class NotificationsFragment extends Fragment {
         launchSearchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    if(ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_CONTACTS) !=
-                            PackageManager.PERMISSION_GRANTED){
-                        ActivityCompat.requestPermissions(getActivity(), new String[] {Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS}, RESULT_LOAD_CONTACT);
-                    } else {
-                        //C'EST ICI QUE DOIVENT ETRE TESTER LES FONCTIONS DE RECHERCHE EN PARAMETREE DE l'ARRAYLIST DYNAMICURISPICS !!!
-                        ArrayList<Uri> dynamicUrisResult = new ArrayList<Uri>(notificationsViewModel.getAllPicturesFromTheDatabase());
-                        System.out.println(dynamicUrisResult.size());
-                        ArrayList<Bitmap> dynamicListPicsBitmapResult = new ArrayList<Bitmap>();
-                        for (Uri u : dynamicUrisResult){
-                            dynamicListPicsBitmapResult.add(findUriToPictureBitmap(u));
+                System.out.println("SelectedContactUri : "+selectedContactsUri.size());
+                System.out.println("SelectedEventsUri : "+selectedEventsUri.size());
+                if(selectedContactsUri.size() >=1  && selectedEventsUri.size() == 0){
+                    notificationsViewModel.setAllPictureUriFromSomeContacts(selectedContactsUri);
+                    notificationsViewModel.getAllPictureUriFromSomeContacts().observe(getActivity(), new Observer<List<Uri>>() {
+                        @Override
+                        public void onChanged(List<Uri> uris) {
+                            ArrayList<Bitmap> dynamicListPicsBitmapResult = new ArrayList<Bitmap>();
+                            for (Uri u : uris){
+                                dynamicListPicsBitmapResult.add(findUriToPictureBitmap(u));
+                            }
+                            adapterResultSearch.setBitmapSet(dynamicListPicsBitmapResult);
+                            adapterResultSearch.notifyDataSetChanged();
                         }
-                        adapterResultSearch.setBitmapSet(dynamicListPicsBitmapResult);
-                        adapterResultSearch.notifyDataSetChanged();
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
+                    });
+                } else if (selectedEventsUri.size() >= 1 && selectedContactsUri.size() == 0){
+                    notificationsViewModel.setAllPictureUriFromSomeEvents(selectedEventsUri);
+                    notificationsViewModel.getAllPictureUriFromSomeEvents().observe(getActivity(), new Observer<List<Uri>>() {
+                        @Override
+                        public void onChanged(List<Uri> uris) {
+                            ArrayList<Bitmap> dynamicListPicsBitmapResult = new ArrayList<Bitmap>();
+                            for (Uri u : uris){
+                                dynamicListPicsBitmapResult.add(findUriToPictureBitmap(u));
+                            }
+                            adapterResultSearch.setBitmapSet(dynamicListPicsBitmapResult);
+                            adapterResultSearch.notifyDataSetChanged();
+                        }
+                    });
+                } else if (selectedContactsUri.size() >= 1 && selectedEventsUri.size() >= 1){
+                    notificationsViewModel.setAllPictureUriFromSomeContactsSomeEvents(selectedContactsUri, selectedEventsUri);
+                    notificationsViewModel.getAllPictureUriFromSomeContactsSomeEvents().observe(getActivity(), new Observer<List<Uri>>() {
+                        @Override
+                        public void onChanged(List<Uri> uris) {
+                            ArrayList<Bitmap> dynamicListPicsBitmapResult = new ArrayList<Bitmap>();
+                            for (Uri u : uris){
+                                dynamicListPicsBitmapResult.add(findUriToPictureBitmap(u));
+                            }
+                            adapterResultSearch.setBitmapSet(dynamicListPicsBitmapResult);
+                            adapterResultSearch.notifyDataSetChanged();
+                        }
+                    });
+                } else {
+                    ArrayList<Bitmap> emptyBitmapResult = new ArrayList<Bitmap>();
+                    adapterResultSearch.setBitmapSet(emptyBitmapResult);
+                    adapterResultSearch.notifyDataSetChanged();
                 }
             }
         });

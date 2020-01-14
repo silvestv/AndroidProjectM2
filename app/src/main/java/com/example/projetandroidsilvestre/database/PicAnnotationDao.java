@@ -39,6 +39,21 @@ public abstract class PicAnnotationDao {
     @Query("SELECT DISTINCT picUri from contact_annotation UNION SELECT DISTINCT picUri from event_annotation")
     public abstract LiveData<List<Uri>> loadAllPicUriAnnotation();
 
+    @Query("SELECT DISTINCT picUri from contact_annotation WHERE contactUri=:contactUri")
+    public abstract LiveData<List<Uri>> loadAllPictureWithAGivenContact(Uri contactUri);
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    @Query("SELECT DISTINCT ca.picUri from contact_annotation ca, event_annotation ea WHERE ca.contactUri IN(:contactUri) AND ea.eventUri IN(:eventUri)")
+    public abstract LiveData<List<Uri>> loadAllPicturesWithSomeContactsAndSomeEvent(List<Uri> contactUri, List<Uri> eventUri);
+
+    @Query("SELECT DISTINCT picUri from contact_annotation AS ca WHERE ca.contactUri IN(:contactUri)")
+    public abstract LiveData<List<Uri>> loadAllPicturesWithSomeContacts(List<Uri> contactUri);
+
+    @Query("SELECT DISTINCT picUri from event_annotation AS ea WHERE ea.eventUri IN(:eventUri)")
+    public abstract LiveData<List<Uri>> loadAllPicturesWithSomeEvents(List<Uri> eventUri);
+
+
     @Transaction
     public void insertAllEvent(List<EventAnnotation> li) {
         Iterator<EventAnnotation> it = li.iterator();

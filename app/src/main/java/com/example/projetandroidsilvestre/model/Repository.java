@@ -74,4 +74,22 @@ public class Repository {
         return mAllPicUriAnnotation;
     }
 
+    public LiveData<List<Uri>> getAllPictureFromAGivenContact(Uri contactUri){
+        return this.mPicAnotDao.loadAllPictureWithAGivenContact(contactUri);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    public LiveData<List<Uri>> getAllPictureFromSomeContactSomeEvents(List<Uri> contacts, List<Uri> events){
+        return this.mPicAnotDao.loadAllPicturesWithSomeContactsAndSomeEvent(contacts, events);
+    }
+
+    public LiveData<List<Uri>> getAllPictureFromSomeContact(List<Uri> contacts){
+        return this.mPicAnotDao.loadAllPicturesWithSomeContacts(contacts);
+    }
+
+    public LiveData<List<Uri>> getAllPictureFromSomeEvents(List<Uri> events){
+        return this.mPicAnotDao.loadAllPicturesWithSomeEvents(events);
+    }
+
 }
