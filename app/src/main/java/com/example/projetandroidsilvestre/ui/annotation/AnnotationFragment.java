@@ -1,4 +1,4 @@
-package com.example.projetandroidsilvestre.ui.dashboard;
+package com.example.projetandroidsilvestre.ui.annotation;
 
 import android.Manifest;
 import android.app.Activity;
@@ -37,9 +37,9 @@ import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
-public class DashboardFragment extends Fragment {
+public class AnnotationFragment extends Fragment {
 
-    private DashboardViewModel dashboardViewModel;
+    private AnnotationViewModel dashboardViewModel;
 
     private Button chooseImgBtn;
     private Uri selectedImgUri;
@@ -70,8 +70,8 @@ public class DashboardFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        DashboardViewModelFactory factory = new DashboardViewModelFactory(this.getActivity().getApplication());
-        dashboardViewModel = ViewModelProviders.of(this, factory).get(DashboardViewModel.class);
+        AnnotationViewModelFactory factory = new AnnotationViewModelFactory(this.getActivity().getApplication());
+        dashboardViewModel = ViewModelProviders.of(this, factory).get(AnnotationViewModel.class);
         root = inflater.inflate(R.layout.fragment_annotations, container, false);
         chooseImgBtn = (Button) root.findViewById(R.id.chooseImg);
         chooseImgBtn.setOnClickListener(new View.OnClickListener() {

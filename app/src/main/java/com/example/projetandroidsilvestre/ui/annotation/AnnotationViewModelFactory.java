@@ -1,4 +1,4 @@
-package com.example.projetandroidsilvestre.ui.notifications;
+package com.example.projetandroidsilvestre.ui.annotation;
 
 import android.app.Application;
 
@@ -6,18 +6,17 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-public class NotificationViewModelFactory implements ViewModelProvider.Factory {
+public class AnnotationViewModelFactory implements ViewModelProvider.Factory {
 
     private Application mApplication;
 
-    public NotificationViewModelFactory(Application application){
+    public AnnotationViewModelFactory(Application application){
         mApplication = application;
     }
 
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        return (T) new NotificationsViewModel(mApplication);
+        return (T) new AnnotationViewModel(mApplication);
     }
 }
-

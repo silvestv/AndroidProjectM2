@@ -1,4 +1,4 @@
-package com.example.projetandroidsilvestre.ui.notifications;
+package com.example.projetandroidsilvestre.ui.research;
 
 import android.app.Application;
 import android.net.Uri;
@@ -15,7 +15,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-public class NotificationsViewModel extends ViewModel {
+public class ResearchViewModel extends ViewModel {
 
     public Repository mRepo;
     private Application mApplication;
@@ -29,7 +29,7 @@ public class NotificationsViewModel extends ViewModel {
     private LiveData<List<Uri>> mAllPicUriFromSomeContacts;
     private LiveData<List<Uri>> mAllPicUriFromSomeEvents;
 
-    public NotificationsViewModel(Application application) {
+    public ResearchViewModel(Application application) {
         super();
         this.mApplication = application;
         mRepo = new Repository(mApplication);

@@ -1,4 +1,4 @@
-package com.example.projetandroidsilvestre.ui.dashboard;
+package com.example.projetandroidsilvestre.ui.annotation;
 
 import android.content.Context;
 import android.view.LayoutInflater;

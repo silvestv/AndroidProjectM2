@@ -1,4 +1,4 @@
-package com.example.projetandroidsilvestre.ui.dashboard;
+package com.example.projetandroidsilvestre.ui.annotation;
 
 import android.app.Application;
 
@@ -11,12 +11,12 @@ import com.example.projetandroidsilvestre.model.Repository;
 import java.util.List;
 
 
-public class DashboardViewModel extends ViewModel {
+public class AnnotationViewModel extends ViewModel {
 
     public Repository mRepo;
     private Application mApplication;
 
-    public DashboardViewModel(Application application) {
+    public AnnotationViewModel(Application application) {
         super();
         this.mApplication = application;
         mRepo = new Repository(mApplication);

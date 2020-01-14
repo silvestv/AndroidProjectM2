@@ -1,4 +1,4 @@
-package com.example.projetandroidsilvestre.ui.notifications;
+package com.example.projetandroidsilvestre.ui.research;
 
 import android.Manifest;
 import android.app.Activity;
@@ -36,9 +36,9 @@ import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
-public class NotificationsFragment extends Fragment {
+public class ResearchFragment extends Fragment {
 
-    private NotificationsViewModel notificationsViewModel;
+    private ResearchViewModel researchViewModel;
 
     private Button serachingContactBtn;
     private RecyclerView recyclerViewContactSearch;
@@ -65,17 +65,17 @@ public class NotificationsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        NotificationViewModelFactory factory = new NotificationViewModelFactory(this.getActivity().getApplication());
-        notificationsViewModel = ViewModelProviders.of(this, factory).get(NotificationsViewModel.class);
+        ResearchViewModelFactory factory = new ResearchViewModelFactory(this.getActivity().getApplication());
+        researchViewModel = ViewModelProviders.of(this, factory).get(ResearchViewModel.class);
         View root = inflater.inflate(R.layout.fragment_research, container, false);
 
-        notificationsViewModel.getAllEventAnnotations().observe(this, new Observer<List<EventAnnotation>>() {
+        researchViewModel.getAllEventAnnotations().observe(this, new Observer<List<EventAnnotation>>() {
             @Override
             public void onChanged(@Nullable final List<EventAnnotation> events) {   //ne pas supprimer, est nécessaire
             }
         });
 
-        notificationsViewModel.getAllContactAnnotations().observe(this, new Observer<List<ContactAnnotation>>() {
+        researchViewModel.getAllContactAnnotations().observe(this, new Observer<List<ContactAnnotation>>() {
             @Override
             public void onChanged(@Nullable final List<ContactAnnotation> events) {   //ne pas supprimer, est nécessaire
             }
@@ -162,8 +162,8 @@ public class NotificationsFragment extends Fragment {
                 System.out.println("SelectedContactUri : "+selectedContactsUri.size());
                 System.out.println("SelectedEventsUri : "+selectedEventsUri.size());
                 if(selectedContactsUri.size() >=1  && selectedEventsUri.size() == 0){
-                    notificationsViewModel.setAllPictureUriFromSomeContacts(selectedContactsUri);
-                    notificationsViewModel.getAllPictureUriFromSomeContacts().observe(getActivity(), new Observer<List<Uri>>() {
+                    researchViewModel.setAllPictureUriFromSomeContacts(selectedContactsUri);
+                    researchViewModel.getAllPictureUriFromSomeContacts().observe(getActivity(), new Observer<List<Uri>>() {
                         @Override
                         public void onChanged(List<Uri> uris) {
                             ArrayList<Bitmap> dynamicListPicsBitmapResult = new ArrayList<Bitmap>();
@@ -175,8 +175,8 @@ public class NotificationsFragment extends Fragment {
                         }
                     });
                 } else if (selectedEventsUri.size() >= 1 && selectedContactsUri.size() == 0){
-                    notificationsViewModel.setAllPictureUriFromSomeEvents(selectedEventsUri);
-                    notificationsViewModel.getAllPictureUriFromSomeEvents().observe(getActivity(), new Observer<List<Uri>>() {
+                    researchViewModel.setAllPictureUriFromSomeEvents(selectedEventsUri);
+                    researchViewModel.getAllPictureUriFromSomeEvents().observe(getActivity(), new Observer<List<Uri>>() {
                         @Override
                         public void onChanged(List<Uri> uris) {
                             ArrayList<Bitmap> dynamicListPicsBitmapResult = new ArrayList<Bitmap>();
@@ -188,8 +188,8 @@ public class NotificationsFragment extends Fragment {
                         }
                     });
                 } else if (selectedContactsUri.size() >= 1 && selectedEventsUri.size() >= 1){
-                    notificationsViewModel.setAllPictureUriFromSomeContactsSomeEvents(selectedContactsUri, selectedEventsUri);
-                    notificationsViewModel.getAllPictureUriFromSomeContactsSomeEvents().observe(getActivity(), new Observer<List<Uri>>() {
+                    researchViewModel.setAllPictureUriFromSomeContactsSomeEvents(selectedContactsUri, selectedEventsUri);
+                    researchViewModel.getAllPictureUriFromSomeContactsSomeEvents().observe(getActivity(), new Observer<List<Uri>>() {
                         @Override
                         public void onChanged(List<Uri> uris) {
                             ArrayList<Bitmap> dynamicListPicsBitmapResult = new ArrayList<Bitmap>();

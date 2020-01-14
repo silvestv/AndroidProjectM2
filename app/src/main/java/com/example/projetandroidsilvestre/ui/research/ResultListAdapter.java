@@ -1,4 +1,4 @@
-package com.example.projetandroidsilvestre.ui.notifications;
+package com.example.projetandroidsilvestre.ui.research;
 
 import android.content.Context;
 import android.graphics.Bitmap;
