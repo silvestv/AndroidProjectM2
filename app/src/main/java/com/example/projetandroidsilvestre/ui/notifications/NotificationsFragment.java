@@ -81,6 +81,13 @@ public class NotificationsFragment extends Fragment {
             }
         });
 
+        notificationsViewModel.getPicsUri().observe(this, new Observer<List<Uri>>() {
+            @Override
+            public void onChanged(List<Uri> uris) {
+
+            }
+        });
+
         serachingContactBtn = (Button) root.findViewById(R.id.searchingByContactBtn);
         serachingContactBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -167,7 +174,7 @@ public class NotificationsFragment extends Fragment {
                         ArrayList<Uri> dynamicUrisResult = new ArrayList<Uri>(notificationsViewModel.getAllPicturesFromTheDatabase());
                         System.out.println(dynamicUrisResult.size());
                         ArrayList<Bitmap> dynamicListPicsBitmapResult = new ArrayList<Bitmap>();
-                        for (Uri u : dynamicUrisResult){ ;
+                        for (Uri u : dynamicUrisResult){
                             dynamicListPicsBitmapResult.add(findUriToPictureBitmap(u));
                         }
                         adapterResultSearch.setBitmapSet(dynamicListPicsBitmapResult);

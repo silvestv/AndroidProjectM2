@@ -10,6 +10,7 @@ import com.example.projetandroidsilvestre.model.ContactAnnotation;
 import com.example.projetandroidsilvestre.model.EventAnnotation;
 import com.example.projetandroidsilvestre.model.Repository;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -19,6 +20,7 @@ public class NotificationsViewModel extends ViewModel {
     public Repository mRepo;
     private Application mApplication;
 
+    private LiveData<List<Uri>> mAllPicUriAnnotation;
     private LiveData<List<ContactAnnotation>> mAllContactAnnotation;
     private LiveData<List<EventAnnotation>> mAllEventAnnotation;
 
@@ -26,9 +28,25 @@ public class NotificationsViewModel extends ViewModel {
         super();
         this.mApplication = application;
         mRepo = new Repository(mApplication);
-
+        mAllPicUriAnnotation = mRepo.getAllPicUriAnnotation();
         mAllContactAnnotation = mRepo.getAllContactAnnotation();
         mAllEventAnnotation = mRepo.getAllEventAnnotation();
+    }
+
+    ArrayList<Uri> getAllPicturesFromTheDatabase(){
+        ArrayList<Uri> result = new ArrayList<Uri>();
+        if(this.mAllPicUriAnnotation.getValue()!=null){
+            Iterator<Uri> it = this.mAllPicUriAnnotation.getValue().iterator();
+            Uri next ;
+            while(it.hasNext()){
+                next = it.next();
+                System.out.println("LAAAAALALALLA : "+next.toString());
+                if(!result.contains(next)){
+                    result.add(next);
+                }
+            }
+        }
+        return result;
     }
 
     List<Uri> getAllEventsFromAGivenPicture(Uri myPictureUri){        //fonctionne
@@ -58,26 +76,7 @@ public class NotificationsViewModel extends ViewModel {
         }
     }
 
-    List<Uri> getAllPicturesFromTheDatabase(){
-        List<Uri> result = new LinkedList<Uri>();
-        if(this.mAllEventAnnotation.getValue()!=null){
-            Iterator<EventAnnotation> it = this.mAllEventAnnotation.getValue().iterator();
-            EventAnnotation next ;
-            while(it.hasNext()){
-                next = it.next();
-                result.add(next.getK().getPicUri());
-                }
-            }
-        if(this.mAllContactAnnotation.getValue()!=null){
-            Iterator<ContactAnnotation> it = this.mAllContactAnnotation.getValue().iterator();
-            ContactAnnotation next ;
-            while(it.hasNext()){
-                next = it.next();
-                result.add(next.getK().getPicUri());
-            }
-        }
-            return result;
-    }
+
 
     List<Uri> getAllContactsFromAGivenPicture(Uri myPictureUri){
         if(this.mAllContactAnnotation.getValue()!=null){
@@ -204,4 +203,8 @@ public class NotificationsViewModel extends ViewModel {
     }
 
     LiveData<List<ContactAnnotation>> getAllContactAnnotations(){ return this.mAllContactAnnotation; }
+    public LiveData<List<Uri>> getPicsUri(){
+        //System.out.println("Vecteur size Toutes les images : " + mAllPicUriAnnotation.getValue().size());
+        return mAllPicUriAnnotation;
+    }
 }
