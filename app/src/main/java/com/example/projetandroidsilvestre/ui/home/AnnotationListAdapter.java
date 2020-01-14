@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projetandroidsilvestre.R;
-import com.example.projetandroidsilvestre.model.Picture;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +26,6 @@ public class AnnotationListAdapter extends RecyclerView.Adapter<AnnotationListAd
 
     private final LayoutInflater mInflater;
     private Context mContext;
-    private List<Picture> mPicturesAnnotations;
     private List<Bitmap> mPicsSet;
 
     // Provide a suitable constructor (depends on the kind of dataset)
