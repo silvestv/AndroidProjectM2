@@ -135,29 +135,22 @@ public class AnnotationFragment extends Fragment {
         saveAnnotDbButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //System.out.println("ImageUriSaved : "+selectedImgUri.toString());
                 if((selectedEventsUri!=null)&&(selectedImgUri!=null)){
                     Iterator<Uri> it = selectedEventsUri.iterator();
-                    System.out.println("selected image uri "+selectedImgUri.toString());
                     List<EventAnnotation> li = new LinkedList<EventAnnotation>();
                     while(it.hasNext()){
                         Uri eventUri = it.next();
                         EventAnnotation ev = new EventAnnotation(new EventAnnotation.Key(selectedImgUri, eventUri));
-                        System.out.println("selected Annotation uri "+eventUri.toString());
-                        //dashboardViewModel.insertEventAnnotation(ev);
                         li.add(ev);
                     }
                     dashboardViewModel.insertEventAnnotation(li);
                 }
                 if((selectedContactsUri!=null)&&(selectedImgUri!=null)){
                     Iterator<Uri> it = selectedContactsUri.iterator();
-                    System.out.println("selected image uri "+selectedImgUri.toString());
                     List<ContactAnnotation> li = new LinkedList<ContactAnnotation>();
                     while(it.hasNext()){
                         Uri contactUri = it.next();
                         ContactAnnotation ev = new ContactAnnotation(new ContactAnnotation.Key(selectedImgUri, contactUri));
-                        System.out.println("selected contact uri "+contactUri.toString());
-                        //dashboardViewModel.insertContactAnnotation(ev);
                         li.add(ev);
                     }
                     dashboardViewModel.insertContactAnnotation(li);
@@ -189,7 +182,6 @@ public class AnnotationFragment extends Fragment {
         adapterContact.addRemoveContactListener(new RemoveEventListener() {
             @Override
             public void deleteEvent(int position) {
-                //selectedContactsData.remove(position);
             }
         });
 
@@ -223,15 +215,12 @@ public class AnnotationFragment extends Fragment {
                 String contactName = null;
                 Uri selectedContact = data.getData();
                 selectedContactsUri.add(selectedContact);
-                //Uri photoUri = Uri.withAppendedPath(selectedContact, ContactsContract.Contacts.Photo.CONTENT_DIRECTORY);
                 Cursor cursor = getActivity().getContentResolver().query(selectedContact, null, null, null, null);
                 cursor.moveToFirst();
                 int phoneIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
                 int nameIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
-                //int photoContact = cursor.getColumnIndex(ContactsContract.Contacts.Photo.CONTENT_DIRECTORY);
                 contactNumber = cursor.getString(phoneIndex);
                 contactName = cursor.getString(nameIndex);
-                //String contactPhoto = cursor.getString(photoContact);
                 cursor.close();
                 String contactResult = "Name : "+contactName+" ----- "+"Number : "+contactNumber;
                 selectedContactsData.add(contactResult);
@@ -254,8 +243,5 @@ public class AnnotationFragment extends Fragment {
         }
     }
 
-    public void updateSelectedContacts(){
-
-    }
 
 }

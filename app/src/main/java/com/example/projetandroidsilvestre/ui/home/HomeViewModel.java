@@ -38,7 +38,6 @@ public class HomeViewModel extends ViewModel {
             Uri next ;
             while(it.hasNext()){
                 next = it.next();
-                System.out.println("LAAAAALALALLA : "+next.toString());
                 if(!result.contains(next)){
                     result.add(next);
                 }
@@ -50,7 +49,6 @@ public class HomeViewModel extends ViewModel {
 
 
     public LiveData<List<Uri>> getPicsUri(){
-        //System.out.println("Vecteur size Toutes les images : " + mAllPicUriAnnotation.getValue().size());
         return mAllPicUriAnnotation;
     }
 }

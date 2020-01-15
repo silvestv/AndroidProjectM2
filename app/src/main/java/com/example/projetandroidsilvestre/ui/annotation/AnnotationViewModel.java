@@ -22,11 +22,9 @@ public class AnnotationViewModel extends ViewModel {
         mRepo = new Repository(mApplication);
     }
 
-    public void insertEventAnnotation(EventAnnotation ev){ mRepo.InsertEventAnnotation(ev); }
 
     public void insertEventAnnotation(List<EventAnnotation> li){ mRepo.InsertEventAnnotation(li); }
 
-    public void insertContactAnnotation(ContactAnnotation con) {mRepo.InsertContactAnnotation(con);}
 
     public void insertContactAnnotation(List<ContactAnnotation> li) {mRepo.InsertContactAnnotation(li);}
 

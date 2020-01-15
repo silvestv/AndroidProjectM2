@@ -63,10 +63,7 @@ public class ItemSelectedListAdapter extends RecyclerView.Adapter<ItemSelectedLi
         holder.deleteItemBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-
-                System.out.println("DATA  : "+mDataset.get(position));
                 mDataset.remove(position);
-                System.out.println("Postio Remove  : "+position);
                 notifyDataSetChanged();
                 notifyDeleted(position);
             }
@@ -90,7 +87,6 @@ public class ItemSelectedListAdapter extends RecyclerView.Adapter<ItemSelectedLi
         if (removeItemListeners==null) {
             removeItemListeners=new ArrayList<>();
         }
-        System.out.println("EventListe LAAAAAAAAAAAAAAAAAAAAAAAAAA: "+Eventlistener);
         removeItemListeners.add(Eventlistener);
     }
 

@@ -46,7 +46,6 @@ public class ResearchViewModel extends ViewModel {
             Uri next ;
             while(it.hasNext()){
                 next = it.next();
-                System.out.println("LAAAAALALALLA : "+next.toString());
                 if(!result.contains(next)){
                     result.add(next);
                 }
@@ -58,16 +57,12 @@ public class ResearchViewModel extends ViewModel {
     List<Uri> getAllEventsFromAGivenPicture(Uri myPictureUri){
         List<Uri> result = new LinkedList<Uri>();
         if(this.mAllEventAnnotation.getValue()!=null){
-          //  System.out.println("my picture URI = "+myPictureUri.toString());
             Iterator<EventAnnotation> it = this.mAllEventAnnotation.getValue().iterator();
-        //    System.out.println("mAllEventAnnotation.getValue().size() = "+this.mAllEventAnnotation.getValue().size());
             EventAnnotation next ;
             int i = 0;
             while(it.hasNext()){
                 next = it.next();
-              //  System.out.println("picture tested : "+next.getK().getPicUri().toString());
                 if(next.getK().getPicUri().toString().equals(myPictureUri.toString())){
-                //    System.out.println("add");
                     result.add(next.getK().getEventUri());
                 }
                 i++;
@@ -134,7 +129,6 @@ public class ResearchViewModel extends ViewModel {
                 List<Uri> result = new LinkedList<Uri>();
                 while(it.hasNext()){
                     next = it.next();
-                    //regarder si chaque photo contient l'évènement.
                     Iterator<Uri> it2 = picturesWithMyContacts.iterator();
                     Uri currentPicture ;
                     while(it2.hasNext()){
@@ -165,7 +159,6 @@ public class ResearchViewModel extends ViewModel {
                 List<Uri> result = new LinkedList<Uri>();
                 while(it.hasNext()){
                     next = it.next();
-                    //regarder si chaque photo contient le contact.
                     Iterator<Uri> it2 = picturesWithMyEvent.iterator();
                     Uri currentPicture ;
                     while(it2.hasNext()){

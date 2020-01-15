@@ -36,7 +36,6 @@ public class HomeFragment extends Fragment {
         HomeViewModelFactory factory = new HomeViewModelFactory(this.getActivity().getApplication());
         homeViewModel = ViewModelProviders.of(this, factory).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-        //final TextView textView = root.findViewById(R.id.text_home);
         recyclerViewAnnotationsSaved = (RecyclerView) root.findViewById(R.id.listAnnotRcl);
         recyclerViewAnnotationsSaved.setHasFixedSize(true);
         layoutManagerAnnotations = new LinearLayoutManager(getActivity());
@@ -51,10 +50,8 @@ public class HomeFragment extends Fragment {
                 ArrayList<Uri> dynamicListPicsUri = new ArrayList<Uri>(homeViewModel.getAllPicturesFromTheDatabase());
                 ArrayList<Bitmap> dynamicListPics = new ArrayList<Bitmap>();
                 for (Uri u : dynamicListPicsUri){
-                    //System.out.println("COUCOUCOUC"+u.toString());
                     dynamicListPics.add(findUriToPictureBitmap(u));
                 }
-                System.out.println("COUCOUCOUC"+dynamicListPics.size());
                 adapterAnnotations.setBitmapSet(dynamicListPics);
                 adapterAnnotations.notifyDataSetChanged();
             }

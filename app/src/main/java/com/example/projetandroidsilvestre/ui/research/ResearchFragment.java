@@ -159,8 +159,6 @@ public class ResearchFragment extends Fragment {
         launchSearchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("SelectedContactUri : "+selectedContactsUri.size());
-                System.out.println("SelectedEventsUri : "+selectedEventsUri.size());
                 if(selectedContactsUri.size() >=1  && selectedEventsUri.size() == 0){
                     researchViewModel.setAllPictureUriFromSomeContacts(selectedContactsUri);
                     researchViewModel.getAllPictureUriFromSomeContacts().observe(getActivity(), new Observer<List<Uri>>() {
@@ -233,15 +231,12 @@ public class ResearchFragment extends Fragment {
                 String contactName = null;
                 Uri selectedContact = data.getData();
                 selectedContactsUri.add(selectedContact);
-                //Uri photoUri = Uri.withAppendedPath(selectedContact, ContactsContract.Contacts.Photo.CONTENT_DIRECTORY);
                 Cursor cursor = getActivity().getContentResolver().query(selectedContact, null, null, null, null);
                 cursor.moveToFirst();
                 int phoneIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
                 int nameIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
-                //int photoContact = cursor.getColumnIndex(ContactsContract.Contacts.Photo.CONTENT_DIRECTORY);
                 contactNumber = cursor.getString(phoneIndex);
                 contactName = cursor.getString(nameIndex);
-                //String contactPhoto = cursor.getString(photoContact);
                 cursor.close();
                 String contactResult = "Name : "+contactName+" ----- "+"Number : "+contactNumber;
                 selectedContactsData.add(contactResult);

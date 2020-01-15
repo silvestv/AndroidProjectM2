@@ -64,11 +64,8 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
             @Override
             public void onClick(View v) {
 
-                System.out.println("DATA  : "+mDataset.get(position));
                 mDataset.remove(position);
-                System.out.println("Postio Remove  : "+position);
                 notifyDataSetChanged();
-                System.out.println("CHIIIIIIIIIIIIIIERRRR");
                 notifyDeleted(position);
 
             }
@@ -92,7 +89,6 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
         if (removeItemsListeners==null) {
             removeItemsListeners=new ArrayList<>();
         }
-        System.out.println("EventListe LAAAAAAAAAAAAAAAAAAAAAAAAAA: "+Eventlistener);
         removeItemsListeners.add(Eventlistener);
     }
 
