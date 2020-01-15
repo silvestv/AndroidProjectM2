@@ -168,6 +168,7 @@ public class AnnotationFragment extends Fragment {
         adapterEvent.addRemoveContactListener(new RemoveEventListener() {
             @Override
             public void deleteEvent(int position) {
+                selectedEventsUri.remove(position);
             }
         });
 
@@ -182,6 +183,7 @@ public class AnnotationFragment extends Fragment {
         adapterContact.addRemoveContactListener(new RemoveEventListener() {
             @Override
             public void deleteEvent(int position) {
+                selectedContactsUri.remove(position);
             }
         });
 
