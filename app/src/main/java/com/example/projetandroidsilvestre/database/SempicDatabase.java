@@ -31,7 +31,7 @@ public abstract class SempicDatabase extends RoomDatabase {
             synchronized (SempicDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            SempicDatabase.class, "database_8")
+                            SempicDatabase.class, "database_9")
                             .addCallback(sRoomDatabaseCallback)
                             .build();
                 }
