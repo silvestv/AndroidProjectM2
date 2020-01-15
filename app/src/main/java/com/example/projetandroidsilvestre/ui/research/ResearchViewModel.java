@@ -10,9 +10,6 @@ import com.example.projetandroidsilvestre.model.ContactAnnotation;
 import com.example.projetandroidsilvestre.model.EventAnnotation;
 import com.example.projetandroidsilvestre.model.Repository;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 public class ResearchViewModel extends ViewModel {
@@ -38,7 +35,49 @@ public class ResearchViewModel extends ViewModel {
         mAllEventAnnotation = mRepo.getAllEventAnnotation();
     }
 
+    LiveData<List<EventAnnotation>> getAllEventAnnotations(){
+        return this.mAllEventAnnotation;
+    }
 
+    LiveData<List<ContactAnnotation>> getAllContactAnnotations(){ return this.mAllContactAnnotation; }
+
+
+    public void setAllPictureUriFromAGivenContact(Uri myContactUri){
+        mAllPicUriFromAGivenContact = this.mRepo.getAllPictureFromAGivenContact(myContactUri);
+    }
+    public LiveData<List<Uri>> getAllPictureUriTest(){
+        return this.mAllPicUriFromAGivenContact;
+    }
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////
+    public void setAllPictureUriFromSomeContactsSomeEvents(List<Uri> myContacts, List<Uri> myEvents){
+        mAllPicUriFromSomeContactsSomeEvents = this.mRepo.getAllPictureFromSomeContactSomeEvents(myContacts, myEvents);
+    }
+    public LiveData<List<Uri>> getAllPictureUriFromSomeContactsSomeEvents(){
+        return this.mAllPicUriFromSomeContactsSomeEvents;
+    }
+
+
+    public void setAllPictureUriFromSomeContacts(List<Uri> myContacts){
+        mAllPicUriFromSomeContacts = this.mRepo.getAllPictureFromSomeContact(myContacts);
+    }
+    public LiveData<List<Uri>> getAllPictureUriFromSomeContacts(){
+        return this.mAllPicUriFromSomeContacts;
+    }
+
+    public void setAllPictureUriFromSomeEvents(List<Uri> myEvents){
+        mAllPicUriFromSomeEvents = this.mRepo.getAllPictureFromSomeEvents(myEvents);
+    }
+    public LiveData<List<Uri>> getAllPictureUriFromSomeEvents(){
+        return this.mAllPicUriFromSomeEvents;
+    }
+
+
+
+
+    /////////////////////PREMIERE TECHNIQUE CONTOURNEMENT DE PROBLEME DE PARAMETRE RESOLU//////////////////////////////////////////////////////////////////:
+    /*
     ArrayList<Uri> getAllPicturesFromTheDatabase(){
         ArrayList<Uri> result = new ArrayList<Uri>();
         if(this.mAllPicUriAnnotation.getValue()!=null){
@@ -236,44 +275,7 @@ public class ResearchViewModel extends ViewModel {
         }
         return result;
     }
-
-    LiveData<List<EventAnnotation>> getAllEventAnnotations(){
-        return this.mAllEventAnnotation;
-    }
-
-    LiveData<List<ContactAnnotation>> getAllContactAnnotations(){ return this.mAllContactAnnotation; }
-
-
-    public void setAllPictureUriFromAGivenContact(Uri myContactUri){
-        mAllPicUriFromAGivenContact = this.mRepo.getAllPictureFromAGivenContact(myContactUri);
-    }
-    public LiveData<List<Uri>> getAllPictureUriTest(){
-        return this.mAllPicUriFromAGivenContact;
-    }
-
-
-    ////////////////////////////////////////////////////////////////////////////////////////
-    public void setAllPictureUriFromSomeContactsSomeEvents(List<Uri> myContacts, List<Uri> myEvents){
-        mAllPicUriFromSomeContactsSomeEvents = this.mRepo.getAllPictureFromSomeContactSomeEvents(myContacts, myEvents);
-    }
-    public LiveData<List<Uri>> getAllPictureUriFromSomeContactsSomeEvents(){
-        return this.mAllPicUriFromSomeContactsSomeEvents;
-    }
-
-
-    public void setAllPictureUriFromSomeContacts(List<Uri> myContacts){
-        mAllPicUriFromSomeContacts = this.mRepo.getAllPictureFromSomeContact(myContacts);
-    }
-    public LiveData<List<Uri>> getAllPictureUriFromSomeContacts(){
-        return this.mAllPicUriFromSomeContacts;
-    }
-
-    public void setAllPictureUriFromSomeEvents(List<Uri> myEvents){
-        mAllPicUriFromSomeEvents = this.mRepo.getAllPictureFromSomeEvents(myEvents);
-    }
-    public LiveData<List<Uri>> getAllPictureUriFromSomeEvents(){
-        return this.mAllPicUriFromSomeEvents;
-    }
+*/
 
 
 }

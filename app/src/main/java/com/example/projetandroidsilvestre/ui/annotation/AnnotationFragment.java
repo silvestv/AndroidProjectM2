@@ -203,7 +203,6 @@ public class AnnotationFragment extends Fragment {
 
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
             String picturePath = cursor.getString(columnIndex);
-            System.out.println("PPPPPPP : "+picturePath);
             cursor.close();
 
             ImageView avatarChosen = (ImageView) root.findViewById(R.id.avatarChosen);

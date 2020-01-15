@@ -18,6 +18,7 @@ import java.util.List;
 @Dao
 public abstract class PicAnnotationDao {
 
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     public abstract void insertPictureEvent(EventAnnotation a);
 
